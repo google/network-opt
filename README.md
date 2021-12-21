@@ -32,3 +32,5 @@ real    0m1.727s
 user    0m1.719s
 sys     0m0.018s
 </pre>
+
+This is not an officially supported Google product.
