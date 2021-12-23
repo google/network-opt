@@ -15,7 +15,7 @@ If you decide to use this software in your research, please cite the correspondi
 Example usage of the tool:
 
 <pre>
-g++ -Wall network_opt.cpp -o network_opt -O3
+g++ -Wall network_opt.cpp network_opt_main.cpp -o network_opt -O3
 time ./network_opt 8 4 1 E12
 </pre>
 
