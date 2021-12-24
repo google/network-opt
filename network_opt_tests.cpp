@@ -14,7 +14,7 @@ limitations under the License.
 #include "network_opt_utils.h"
 
 void test_node() {
-  Node* network = NULL;
+  network_opt::Node* network = NULL;
   
   network = &N()[NT(1)][N()[NT(2)][NT(3)][NT(4)]][NT(5)];
   assert(network->to_string() == "1+(2|3|4)+5");
@@ -34,7 +34,7 @@ void test_node() {
 }
 
 void test_network_evaluator() {
-  Node* network = NULL;
+  network_opt::Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
   assert(network_evaluator.evaluate_cost(network, 5) == Ratio(220, 1));
@@ -55,31 +55,31 @@ void test_network_evaluator() {
 }
 
 void test_expander() {
-  Node* network = NULL;
+  network_opt::Node* network = NULL;
 
   network = &NT({1,2,3});
-  assert(Expander(network).expandable() == network);
+  assert(network_opt::Expander(network).expandable() == network);
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})][NT({5,6})];
-  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  assert(network_opt::Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT({2,3})][NT({5,6,7})];
-  assert(Expander(network).expandable()->values == Values({4,5,6})); // means {5,6,7}
+  assert(network_opt::Expander(network).expandable()->values == Values({4,5,6})); // means {5,6,7}
   delete network;
 
   network = &N()[NT(1)][NT(5)[NT({2,3,4})]][NT({6,7})];
-  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  assert(network_opt::Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT(2)][NT(3)];
-  assert(Expander(network).expandable() == NULL);
+  assert(network_opt::Expander(network).expandable() == NULL);
   delete network;
 
   // Verify that we can see more than one expandable
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]];
-  Expander expander(network);
+  network_opt::Expander expander(network);
   assert(expander.expandable()->values == Values({1,2,3})); // means {2,3,4}
   assert(expander.expandable()->values == Values({4,5,6})); // means {5,6,7}
   assert(expander.expandable() == NULL);
@@ -87,47 +87,47 @@ void test_expander() {
   
   // Verify that we can modify the contents of the given list
   network = &N()[NT({1,2,3})][NT(4)][NT(5)];
-  Node* expandable = Expander(network).expandable();
+  network_opt::Node* expandable = network_opt::Expander(network).expandable();
   expandable->values.push_back(5);
   assert(network->children.front()->values == Values({0,1,2,5})); // means {1,2,3,6}
   delete network;
 }
 
 void test_tabulator() {
-  Tabulator tabulator(3);
+  network_opt::Tabulator tabulator(3);
   tabulator.tabulate(7);
-  Node* network = NULL;
+  network_opt::Node* network = NULL;
 
   network = &N()[N()[NT(1)][NT(3)]][N()[NT({2,5,6})][NT(4)][NT(7)]];
-  Expander expander_a(network);
-  Node* expandable_a = expander_a.expandable();
+  network_opt::Expander expander_a(network);
+  network_opt::Node* expandable_a = expander_a.expandable();
   assert(expandable_a->values == Values({1,4,5})); // means {2,5,6}
   Values values_a = expandable_a->values; expandable_a->values.clear();
-  Node* replacement_a = tabulator.binary_search(network, expandable_a, values_a, 7);
+  network_opt::Node* replacement_a = tabulator.binary_search(network, expandable_a, values_a, 7);
   assert(replacement_a->ratio == Ratio(52, 7));
   delete network;
 
   network = &N()[NT({1,3,4})][NT(7)][NT({2,5,6})];
-  Expander expander_b(network);
-  Node* expandable_b0 = expander_b.expandable();
-  Node* expandable_b1 = expander_b.expandable();
+  network_opt::Expander expander_b(network);
+  network_opt::Node* expandable_b0 = expander_b.expandable();
+  network_opt::Node* expandable_b1 = expander_b.expandable();
   assert(expandable_b0->values == Values({1,4,5})); // means {2,5,6}
   assert(expandable_b1->values == Values({0,2,3})); // means {1,3,4}
   Values values_b0 = expandable_b0->values; expandable_b0->values.clear();
   Values values_b1 = expandable_b1->values; expandable_b1->values.clear();
-  pair<Node*,Node*> replacement_b = tabulator.linear_search(
+  std::pair<network_opt::Node*,network_opt::Node*> replacement_b = tabulator.linear_search(
       network, expandable_b0, expandable_b1, values_b0, values_b1, 7);
   assert(replacement_b.first->ratio  == Ratio(15, 13));
   assert(replacement_b.second->ratio == Ratio(12, 19));
   delete network;
 }
 
-void check_network(Node* network, Ratio ratio) {
+void check_network(network_opt::Node* network, Ratio ratio) {
   assert(network->ratio == ratio);
 }
 
-void test_solver(Bounder* bounder = NULL, Tabulator* tabulator = NULL) {
-  Solver solver(bounder, tabulator);
+void test_solver(network_opt::Bounder* bounder = NULL, network_opt::Tabulator* tabulator = NULL) {
+  network_opt::Solver solver(bounder, tabulator);
   check_network(solver.solve(2), Ratio(14, 9));
   check_network(solver.solve(3), Ratio(3, 4));
   check_network(solver.solve(4), Ratio(0, 1));
@@ -143,10 +143,10 @@ int main() {
   test_tabulator();
   test_solver();
 
-  Bounder bounder;
+  network_opt::Bounder bounder;
   test_solver(&bounder);
 
-  Tabulator tabulator(3);
+  network_opt::Tabulator tabulator(3);
   test_solver(&bounder, &tabulator);
 
   std::cout << "*** TESTS PASS ***" << std::endl;
