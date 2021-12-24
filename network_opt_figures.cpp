@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     std::cout << "$" << subcircuit134.second->to_string(true) << "$ & $";
     if (subcircuit134.first.denominator() == 1) std::cout << subcircuit134.first.numerator();
     else std::cout << "\\sfrac{" << subcircuit134.first.numerator() << "}{" << subcircuit134.first.denominator() << "}";
-    std::cout << "\\ \\Omega \\quad$\\\\" << endl;
+    std::cout << "\\ \\Omega \\quad$\\\\" << std::endl;
   }
   std::cout << "\\cline{1-2}\\cline{4-5}" << std::endl;
   std::cout << "\\multicolumn{2}{c}{(a) $\\mathcal{C}(\\{2,5,6\\})$} & \\multicolumn{1}{c}{} & ";
