@@ -51,7 +51,7 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
 Ratio* SERIES = INT_SERIES;
-Ratio PI_RATIO;
+extern Ratio PI_RATIO;
 
 struct Node {
   Values values; Values hidden; list<Node*> children; Ratio ratio;
