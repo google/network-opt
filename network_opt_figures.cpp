@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 3 RIGHT TOP %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 3 RIGHT TOP %%%%%%%%" << std::endl;
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(5)]][N()[NT(4)][NT(6)]]];
   visualizer.visualize_schematic(std::cout, network, 7);
   std::cout << std::endl;
@@ -98,10 +98,10 @@ int main(int argc, char *argv[]) {
   std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 7 (RIGHT) %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 7 (RIGHT) %%%%%%%%" << std::endl;
   SERIES = ONE_SERIES;
   network = &N()[N(0)][N(1)][N()[N()[N(2)][N(3)][N(4)][N(5)][N()[N(6)][N()[N(7)][N()[N()[N(8)][N(9)][N({10,11})]]]]]][N()[N(12)][N({13,14})]]];
   visualizer.visualize_schematic(cout, network, 15);
-  cout << endl;
+  std::cout << std::endl;
   delete network;
 }
