@@ -32,13 +32,11 @@ limitations under the License.
 #define GET_COST(total, n) (total * total - n)
 //#define GET_COST(total, n) (total - PI_RATIO)
 
-using namespace std;
-using namespace boost;
 using boost::multiprecision::cpp_int;
 using Mask = unsigned int;
-using Ratio = rational<cpp_int>;
+using Ratio = boost::rational<cpp_int>;
 using Value = unsigned int;
-using Values = list<Value>;
+using Values = std::list<Value>;
 
 extern Ratio INT_SERIES[];
 extern Ratio E12_SERIES[];
@@ -47,7 +45,7 @@ extern Ratio* SERIES;
 extern Ratio PI_RATIO;
 
 struct Node {
-  Values values; Values hidden; list<Node*> children; Ratio ratio;
+  Values values; Values hidden; std::list<Node*> children; Ratio ratio;
   static Node& create() { return *(new Node()); }
   static Node& create(Value v) { Node* node = new Node(); node->values.push_back(v); return *node; }
   static Node& create(const Values& vs) { Node* node = new Node(); node->values = vs; return *node; }
@@ -81,7 +79,7 @@ struct Bounder {
 struct Expander {
   Expander(Node* n) : network(n) { stack.push_back(n); }
   Node* expandable();
- private: Node* network; list<Node*> stack;
+ private: Node* network; std::list<Node*> stack;
 };
 
 struct SubsetCoder {
@@ -92,19 +90,19 @@ struct SubsetCoder {
 extern SubsetCoder coder;
 
 struct Tabulator {
-  unsigned int m; vector<vector<pair<Ratio, Node*>>> lookup_table;
+  unsigned int m; std::vector<std::vector<std::pair<Ratio, Node*>>> lookup_table;
   Tabulator(unsigned int _m) : m(_m) { }
   ~Tabulator() { clear(); }
 
   void tabulate(unsigned int n);
   Node* binary_search(const Node* network, Node* expandable, const Values& values, unsigned int n);
-  pair<Node*,Node*> linear_search(const Node* network, Node* expandable_0,
+  std::pair<Node*,Node*> linear_search(const Node* network, Node* expandable_0,
       Node* expandable_1, const Values& values_0, const Values& values_1, unsigned int n);
 
  private:
   void clear();
   void tabulate(unsigned int n, Node* network, Mask mask = 0, Value i = 0);
-  void tabulate(vector<pair<Ratio, Node*>>& entry, Node* network);
+  void tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* network);
 };
 
 struct Solver {
@@ -119,6 +117,6 @@ struct Solver {
   void solve(unsigned int n, Node* network);
 };
 
-void print_summary(ostream& os, Node* network, unsigned int n, const string& prefix);
+void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix);
 
 #endif
