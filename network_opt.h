@@ -70,7 +70,9 @@ struct Node {
 struct NetworkEvaluator {
   Ratio evaluate_total(const Node* node, int bound = 0, char op1 = '+', char op2 = '|');
   Ratio evaluate_cost(const Node* node, unsigned int n, int bound = 0);
-} network_evaluator;
+};
+
+extern NetworkEvaluator network_evaluator;
 
 struct Bounder {
   Ratio bound(const Node* network, unsigned int n);
@@ -85,7 +87,9 @@ struct Expander {
 struct SubsetCoder {
   void decode(Mask mask, const Values& values, Values& include, Values& exclude);
   Mask encode(const Values& values);
-} coder;
+};
+
+extern SubsetCoder coder;
 
 struct Tabulator {
   unsigned int m; vector<vector<pair<Ratio, Node*>>> lookup_table;
