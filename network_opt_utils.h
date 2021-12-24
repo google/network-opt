@@ -11,6 +11,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#ifndef _NETWORK_OPT_UTILS_H_
+#define _NETWORK_OPT_UTILS_H_
+
 #include "network_opt.h"
 
 const Ratio ONE_HALF = Ratio(1, 2);
@@ -23,7 +26,7 @@ struct Visual {
 };
 
 struct Visualizer {
-  void visualize_schematic(ostream& os, Node* network, unsigned int n) {
+  void visualize_schematic(std::ostream& os, Node* network, unsigned int n) {
     Visual visual;
     Node* leafified = network->clone(); leafified->leafify();
     calc_area(leafified, visual);
@@ -49,7 +52,7 @@ struct Visualizer {
     delete leafified;
   }
 
-  void visualize_tree(ostream& os, Node* network, unsigned int n) {
+  void visualize_tree(std::ostream& os, Node* network, unsigned int n) {
     Node* leafified = network->clone(); leafified->leafify();
     print_summary(os, network, n, "% ");
     os << "\\begin{center}" << endl;
@@ -70,7 +73,7 @@ struct Visualizer {
   }
 
   // Helper function for writing schematics
-  void output_coord(ostream& os, const Ratio& begin, const Ratio& end, const string& s = "") {
+  void output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const string& s = "") {
     os << "(" << rational_cast<double>(begin) << "," << rational_cast<double>(end) << ")";
     if (!s.empty()) os << s;
     else os << endl;
@@ -125,7 +128,7 @@ struct Visualizer {
   }
 
   // Fourth, use the given visual to compute the tikzpicture code.
-  void visualize_schematic(ostream& os, Visual& visual, char op1 = '+', char op2 = '|') {
+  void visualize_schematic(std::ostream& os, Visual& visual, char op1 = '+', char op2 = '|') {
     if (visual.v != INT_MAX) {
       // Draw a simple resistor
       output_coord(os, (visual.x    ), (visual.y), " to ");
@@ -182,7 +185,7 @@ struct Visualizer {
     }
   }
 
-  void visualize_tree(ostream& os, Node* node, char op1, char op2) {
+  void visualize_tree(std::ostream& os, Node* node, char op1, char op2) {
     os << "[";
     if (node->children.empty()) {
       if (node->values.size() > 1) os << "{";
@@ -201,3 +204,5 @@ struct Visualizer {
     os << "]";
   }
 } visualizer;
+
+#endif
