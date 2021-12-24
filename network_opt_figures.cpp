@@ -55,8 +55,8 @@ int main(int argc, char *argv[]) {
   std::cout << "%%%%%%%% PAGE 5 RIGHT TOP %%%%%%%%" << std::endl;
   network_opt::Tabulator tabulator(3);
   tabulator.tabulate(7);
-  int entry256 = coder.encode({1,4,5});
-  int entry134 = coder.encode({0,2,3});
+  int entry256 = network_opt::coder.encode({1,4,5});
+  int entry134 = network_opt::coder.encode({0,2,3});
   std::cout << "\\begin{table}[t]" << std::endl;
   std::cout << "\\begin{center}" << std::endl;
   std::cout << "\\small" << endl;
