@@ -11,17 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include <algorithm>
-#include <assert.h>
-#include <boost/multiprecision/cpp_int.hpp>
-#include <boost/rational.hpp>
-#include <iostream>
-#include <list>
-#include <math.h>
-#include <stdlib.h>
-#include <set>
-#include <string>
-#include <vector>
+#include "network_opt.h"
 
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
