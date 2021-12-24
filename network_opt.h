@@ -115,15 +115,6 @@ struct Solver {
   void solve(unsigned int n, Node* network);
 };
 
-void print_summary(ostream& os, Node* network, unsigned int n, const string& prefix) {
-  Ratio total = network_evaluator.evaluate_total(network);
-  os << prefix << "Solution: " << network->to_string() << endl;
-  os << prefix << " Network: " << network->to_network() << endl;
-  os << setprecision(16);
-  os << prefix << "  Target: " << sqrt(n) << endl;
-  os << prefix << "   Total: " << rational_cast<double>(total) << " (" << total << ")" << endl;
-  os << setprecision(4);
-  os << prefix << "    Cost: " << abs(rational_cast<double>(total) - sqrt(n)) << endl;
-}
+void print_summary(ostream& os, Node* network, unsigned int n, const string& prefix);
 
 #endif
