@@ -13,7 +13,7 @@ limitations under the License.
 
 #include "network_opt.h"
 
-PI_RATIO = Ratio(314159265358979,100000000000000);
+Ratio PI_RATIO = Ratio(314159265358979,100000000000000);
 
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
