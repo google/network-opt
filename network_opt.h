@@ -43,7 +43,7 @@ using Values = list<Value>;
 extern Ratio INT_SERIES[];
 extern Ratio E12_SERIES[];
 extern Ratio ONE_SERIES[];
-Ratio* SERIES = INT_SERIES;
+extern Ratio* SERIES;
 extern Ratio PI_RATIO;
 
 struct Node {
