@@ -14,11 +14,11 @@ limitations under the License.
 #include "network_opt.h"
 
 int main(int argc, char *argv[]) {
-  cout << " Command:";
-  for (int i = 0; i < argc; ++i) cout << " " << argv[i];
-  cout << endl;
+  std::cout << " Command:";
+  for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
+  std::cout << std::endl;
   unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
-  string series = argv[4];
+  std::string series = argv[4];
   SERIES = E12_SERIES;
   if (series == "INT") SERIES = INT_SERIES;
   if (series == "ONE") SERIES = ONE_SERIES;
