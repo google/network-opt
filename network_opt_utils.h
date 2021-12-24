@@ -35,12 +35,12 @@ struct Visualizer {
     update_coords(visual, ONE_QUARTER);
     flip(visual, visual.h);
     print_summary(os, network, n, "% ");
-    os << "\\begin{center}" << endl;
-    os << "\\small" << endl;
-    os << "\\ctikzset{bipoles/resistor/height=0.1}" << endl;
-    os << "\\ctikzset{bipoles/resistor/width=0.4}" << endl;
-    os << "\\begin{tikzpicture}[scale=0.75]" << endl;
-    os << "\\draw[color=black]" << endl;
+    os << "\\begin{center}" << std::endl;
+    os << "\\small" << std::endl;
+    os << "\\ctikzset{bipoles/resistor/height=0.1}" << std::endl;
+    os << "\\ctikzset{bipoles/resistor/width=0.4}" << std::endl;
+    os << "\\begin{tikzpicture}[scale=0.75]" << std::endl;
+    os << "\\draw[color=black]" << std::endl;
     output_coord(os,           0, (visual.h - ONE_HALF), " to ");
     os << "[short,*-] ";
     output_coord(os, ONE_QUARTER, (visual.h - ONE_HALF));
@@ -48,9 +48,9 @@ struct Visualizer {
     output_coord(os, (visual.w + ONE_QUARTER), (visual.h - ONE_HALF), " to ");
     os << "[short,-*] ";
     output_coord(os, (visual.w + ONE_HALF   ), (visual.h - ONE_HALF));
-    os << ";" << endl;
-    os << "\\end{tikzpicture}" << endl;
-    os << "\\end{center}" << endl;
+    os << ";" << std::endl;
+    os << "\\end{tikzpicture}" << std::endl;
+    os << "\\end{center}" << std::endl;
     delete leafified;
   }
 
@@ -134,7 +134,7 @@ struct Visualizer {
     if (visual.v != INT_MAX) {
       // Draw a simple resistor
       output_coord(os, (visual.x    ), (visual.y), " to ");
-      auto v = rational_cast<long long>(SERIES[visual.v] * 10);
+      auto v = boost::rational_cast<long long>(SERIES[visual.v] * 10);
       os << "[R,l=";
       os << v / 10;
       if (v % 10) os << "." << v % 10;
