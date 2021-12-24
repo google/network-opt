@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   Tabulator* tabulator = t ? new Tabulator(t) : NULL;
   Solver solver(bounder, tabulator);
   Node* network = solver.solve(n);
-  print_summary(cout, network, n, "");
+  print_summary(std::cout, network, n, "");
   delete tabulator;
   delete bounder;
 }
