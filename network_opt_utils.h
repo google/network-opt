@@ -19,6 +19,8 @@ limitations under the License.
 const Ratio ONE_HALF = Ratio(1, 2);
 const Ratio ONE_QUARTER = Ratio(1, 4);
 
+namespace network_opt {
+
 struct Visual {
   Ratio x, y, w, h; Value v; vector<Visual> subvisuals;
   Visual(Ratio _x = 0, Ratio _y = 0, Ratio _w = 0, Ratio _h = 0, Value _v = INT_MAX) :
@@ -204,5 +206,7 @@ struct Visualizer {
     os << "]";
   }
 } visualizer;
+
+}
 
 #endif
