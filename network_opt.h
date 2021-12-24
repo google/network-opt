@@ -26,8 +26,8 @@ limitations under the License.
 #include <string>
 #include <vector>
 
-#define N Node::create
-#define NT Node::create_test
+#define N network_opt::Node::create
+#define NT network_opt::Node::create_test
 #define WRITEOP(s, op, mathmode) { if (op == '+' && mathmode) s += "$+$"; else s += op; }
 #define GET_COST(total, n) (total * total - n)
 //#define GET_COST(total, n) (total - PI_RATIO)
