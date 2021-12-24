@@ -44,6 +44,8 @@ extern Ratio ONE_SERIES[];
 extern Ratio* SERIES;
 extern Ratio PI_RATIO;
 
+namespace network_opt {
+
 struct Node {
   Values values; Values hidden; std::list<Node*> children; Ratio ratio;
   static Node& create() { return *(new Node()); }
@@ -118,5 +120,7 @@ struct Solver {
 };
 
 void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix);
+
+}
 
 #endif
