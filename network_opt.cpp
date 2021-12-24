@@ -294,7 +294,7 @@ void Solver::solve(unsigned int n, Node* network) {
              values_0.size() <= tabulator->m &&
              expandable_1->values.size() <= tabulator->m) {
     Values values_1 = expandable_1->values; expandable_1->values.clear();
-    pair<Node*,Node*> nodes = tabulator->linear_search(
+    std::pair<Node*,Node*> nodes = tabulator->linear_search(
         network, expandable_0, expandable_1, values_0, values_1, n);
     expandable_0->children.push_back(nodes.first);
     expandable_1->children.push_back(nodes.second);
