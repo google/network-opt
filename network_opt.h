@@ -11,6 +11,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#ifndef _NETWORK_OPT_H_
+#define _NETWORK_OPT_H_
+
 #include <algorithm>
 #include <assert.h>
 #include <boost/multiprecision/cpp_int.hpp>
@@ -129,3 +132,5 @@ void print_summary(ostream& os, Node* network, unsigned int n, const string& pre
   os << setprecision(4);
   os << prefix << "    Cost: " << abs(rational_cast<double>(total) - sqrt(n)) << endl;
 }
+
+#endif
