@@ -26,6 +26,8 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
 Ratio* SERIES = INT_SERIES;
 Ratio PI_RATIO = Ratio(314159265358979,100000000000000);
 
+namespace network_opt {
+
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
 Node* Node::clone() {
@@ -329,4 +331,6 @@ void print_summary(std::ostream& os, Node* network, unsigned int n, const std::s
   os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << std::endl;
   os << std::setprecision(4);
   os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(n)) << std::endl;
+}
+
 }
