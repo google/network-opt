@@ -23,6 +23,7 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
+Ratio* SERIES = INT_SERIES;
 Ratio PI_RATIO = Ratio(314159265358979,100000000000000);
 
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
