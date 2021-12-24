@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
   SERIES = E12_SERIES;
   if (series == "INT") SERIES = INT_SERIES;
   if (series == "ONE") SERIES = ONE_SERIES;
-  network_opt::Bounder* bounder = b ? new Bounder() : NULL;
-  network_opt::Tabulator* tabulator = t ? new Tabulator(t) : NULL;
+  network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
+  network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::Solver solver(bounder, tabulator);
   network_opt::Node* network = solver.solve(n);
   network_opt::print_summary(std::cout, network, n, "");
