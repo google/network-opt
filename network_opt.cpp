@@ -116,6 +116,8 @@ Ratio NetworkEvaluator::evaluate_cost(const Node* node, unsigned int n, int boun
   return (cost > 0) ? cost : -cost;
 }
 
+NetworkEvaluator network_evaluator;
+
 Ratio Bounder::bound(const Node* network, unsigned int n) {
   Ratio lower_bound = network_evaluator.evaluate_total(network, -1);
   Ratio upper_bound = network_evaluator.evaluate_total(network,  1);
@@ -142,12 +144,14 @@ void SubsetCoder::decode(Mask mask, const Values& values, Values& include, Value
     mask >>= 1;
   }
 }
-  
+
 Mask SubsetCoder::encode(const Values& values) {
   Mask mask = 0;
   for (auto value : values) mask |= 1 << value;
   return mask;
 }
+
+SubsetCoder coder;
 
 void Tabulator::tabulate(unsigned int n) {
   clear();
