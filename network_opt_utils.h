@@ -75,8 +75,8 @@ struct Visualizer {
   }
 
   // Helper function for writing schematics
-  void output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const string& s = "") {
-    os << "(" << rational_cast<double>(begin) << "," << rational_cast<double>(end) << ")";
+  void output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const std::string& s = "") {
+    os << "(" << boost::rational_cast<double>(begin) << "," << boost::rational_cast<double>(end) << ")";
     if (!s.empty()) os << s;
     else os << std::endl;
   }
