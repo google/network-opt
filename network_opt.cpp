@@ -52,8 +52,8 @@ void Node::leafify() {
   }
 }
 
-string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
-  string s = "";
+std::string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
+  std::string s = "";
   if (!top && values.size() + children.size() > 1) s += "(";
   for (auto child = children.begin(); child != children.end(); ++child) {
     if (child != children.begin()) WRITEOP(s, op1, mathmode);
@@ -72,8 +72,8 @@ string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
   return s;
 }
 
-string Node::to_network(char op1, char op2) const {
-  string s = "N(";
+std::string Node::to_network(char op1, char op2) const {
+  std::string s = "N(";
   if (values.size() > 1) s += "{";
   for (auto value = values.begin(); value != values.end(); ++value) {
     if (value != values.begin()) s += ",";
@@ -163,7 +163,7 @@ void Tabulator::tabulate(unsigned int n) {
 
 Node* Tabulator::binary_search(const Node* network, Node* expandable, const Values& values, unsigned int n) {
   Mask mask = coder.encode(values);
-  vector<pair<Ratio, Node*>>& entry = lookup_table[mask];
+  std::vector<std::pair<Ratio, Node*>>& entry = lookup_table[mask];
   int lo = 0, hi = entry.size(), best_idx = -1;
   Ratio best_cost = -1;
   while (lo < hi) {
@@ -181,11 +181,11 @@ Node* Tabulator::binary_search(const Node* network, Node* expandable, const Valu
   return entry[best_idx].second;
 }
 
-pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expandable_0,
+std::pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expandable_0,
     Node* expandable_1, const Values& values_0, const Values& values_1, unsigned int n) {
   Mask mask_0 = coder.encode(values_0), mask_1 = coder.encode(values_1);
-  vector<pair<Ratio, Node*>>& entry_0 = lookup_table[mask_0],
-                              entry_1 = lookup_table[mask_1];
+  std::vector<std::pair<Ratio, Node*>>& entry_0 = lookup_table[mask_0],
+                                        entry_1 = lookup_table[mask_1];
   unsigned int lo = 0;
   int hi = entry_1.size() - 1, best_lo = -1, best_hi = -1;
   Ratio best_cost = -1;
@@ -202,7 +202,7 @@ pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expandable
     expandable_1->children.pop_back();
     expandable_0->children.pop_back();
   }
-  return pair<Node*,Node*>(entry_0[best_lo].second, entry_1[best_hi].second);
+  return std::pair<Node*,Node*>(entry_0[best_lo].second, entry_1[best_hi].second);
 }
 
 void Tabulator::clear() {
@@ -213,7 +213,7 @@ void Tabulator::clear() {
 void Tabulator::tabulate(unsigned int n, Node* network, Mask mask, Value i) {
   if (i >= n) {
     if (mask) {
-      vector<pair<Ratio, Node*>>& entry = lookup_table[mask];
+      std::vector<std::pair<Ratio, Node*>>& entry = lookup_table[mask];
       tabulate(entry, network);
       sort(entry.begin(), entry.end());
     }
@@ -227,13 +227,13 @@ void Tabulator::tabulate(unsigned int n, Node* network, Mask mask, Value i) {
   }
 }
 
-void Tabulator::tabulate(vector<pair<Ratio, Node*>>& entry, Node* network) {
+void Tabulator::tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* network) {
   Expander expander(network);
   Node* expandable = expander.expandable();
   if (!expandable) {
     Node* clone = network->clone();
     clone->ratio = network_evaluator.evaluate_total(network);
-    entry.push_back(pair<Ratio, Node*>(clone->ratio, clone));
+    entry.push_back(std::pair<Ratio, Node*>(clone->ratio, clone));
     return;
   }
   Values values = expandable->values; expandable->values.clear();
@@ -320,13 +320,13 @@ void Solver::solve(unsigned int n, Node* network) {
   expandable_0->values = values_0;
 }
 
-void print_summary(ostream& os, Node* network, unsigned int n, const string& prefix) {
+void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix) {
   Ratio total = network_evaluator.evaluate_total(network);
   os << prefix << "Solution: " << network->to_string() << endl;
   os << prefix << " Network: " << network->to_network() << endl;
-  os << setprecision(16);
-  os << prefix << "  Target: " << sqrt(n) << endl;
-  os << prefix << "   Total: " << rational_cast<double>(total) << " (" << total << ")" << endl;
-  os << setprecision(4);
-  os << prefix << "    Cost: " << abs(rational_cast<double>(total) - sqrt(n)) << endl;
+  os << std::setprecision(16);
+  os << prefix << "  Target: " << std::sqrt(n) << endl;
+  os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << endl;
+  os << std::setprecision(4);
+  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(n)) << endl;
 }
