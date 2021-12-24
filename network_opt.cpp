@@ -322,11 +322,11 @@ void Solver::solve(unsigned int n, Node* network) {
 
 void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix) {
   Ratio total = network_evaluator.evaluate_total(network);
-  os << prefix << "Solution: " << network->to_string() << endl;
-  os << prefix << " Network: " << network->to_network() << endl;
+  os << prefix << "Solution: " << network->to_string() << std::endl;
+  os << prefix << " Network: " << network->to_network() << std::endl;
   os << std::setprecision(16);
-  os << prefix << "  Target: " << std::sqrt(n) << endl;
-  os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << endl;
+  os << prefix << "  Target: " << std::sqrt(n) << std::endl;
+  os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << std::endl;
   os << std::setprecision(4);
-  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(n)) << endl;
+  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(n)) << std::endl;
 }
