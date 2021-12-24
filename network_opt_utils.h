@@ -22,7 +22,7 @@ const Ratio ONE_QUARTER = Ratio(1, 4);
 namespace network_opt {
 
 struct Visual {
-  Ratio x, y, w, h; Value v; vector<Visual> subvisuals;
+  Ratio x, y, w, h; Value v; std::vector<Visual> subvisuals;
   Visual(Ratio _x = 0, Ratio _y = 0, Ratio _w = 0, Ratio _h = 0, Value _v = INT_MAX) :
     x(_x), y(_y), w(_w), h(_h), v(_v) {}
 };
@@ -57,14 +57,14 @@ struct Visualizer {
   void visualize_tree(std::ostream& os, Node* network, unsigned int n) {
     Node* leafified = network->clone(); leafified->leafify();
     print_summary(os, network, n, "% ");
-    os << "\\begin{center}" << endl;
-    os << "\\small" << endl;
-    os << "\\begin{forest}" << endl;
-    os << "for tree={grow'=0,draw}" << endl;
+    os << "\\begin{center}" << std::endl;
+    os << "\\small" << std::endl;
+    os << "\\begin{forest}" << std::endl;
+    os << "for tree={grow'=0,draw}" << std::endl;
     visualize_tree(os, leafified, '+', '|');
-    os << endl;
-    os << "\\end{forest}" << endl;
-    os << "\\end{center}" << endl;
+    os << std::endl;
+    os << "\\end{forest}" << std::endl;
+    os << "\\end{center}" << std::endl;
     delete leafified;
   }
 
@@ -78,7 +78,7 @@ struct Visualizer {
   void output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const string& s = "") {
     os << "(" << rational_cast<double>(begin) << "," << rational_cast<double>(end) << ")";
     if (!s.empty()) os << s;
-    else os << endl;
+    else os << std::endl;
   }
 
   // First, calculate the area for each visual -- coords will all be zero.
