@@ -39,7 +39,7 @@ void Node::leafify() {
   }
 }
 
-string Node::to_string(bool mathmode = false, bool top = true, char op1 = '+', char op2 = '|') const {
+string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
   string s = "";
   if (!top && values.size() + children.size() > 1) s += "(";
   for (auto child = children.begin(); child != children.end(); ++child) {
@@ -59,7 +59,7 @@ string Node::to_string(bool mathmode = false, bool top = true, char op1 = '+', c
   return s;
 }
 
-string Node::to_network(char op1 = '+', char op2 = '|') const {
+string Node::to_network(char op1, char op2) const {
   string s = "N(";
   if (values.size() > 1) s += "{";
   for (auto value = values.begin(); value != values.end(); ++value) {
@@ -78,7 +78,7 @@ string Node::to_network(char op1 = '+', char op2 = '|') const {
   return s;
 }
 
-Ratio NetworkEvaluator::evaluate_total(const Node* node, int bound = 0, char op1 = '+', char op2 = '|') {
+Ratio NetworkEvaluator::evaluate_total(const Node* node, int bound, char op1, char op2) {
   char op = (bound == 1) ? '+' : '|';
   Ratio result;
   if (!node->values.empty()) {
@@ -97,7 +97,7 @@ Ratio NetworkEvaluator::evaluate_total(const Node* node, int bound = 0, char op1
   return (op1 == '+') ? result : 1 / result;
 }
 
-Ratio NetworkEvaluator::evaluate_cost(const Node* node, unsigned int n, int bound = 0) {
+Ratio NetworkEvaluator::evaluate_cost(const Node* node, unsigned int n, int bound) {
   Ratio total = evaluate_total(node, bound);
   Ratio cost = GET_COST(total, n);
   return (cost > 0) ? cost : -cost;
@@ -193,7 +193,7 @@ void Tabulator::clear() {
   lookup_table.clear();
 }
 
-void Tabulator::tabulate(unsigned int n, Node* network, Mask mask = 0, Value i = 0) {
+void Tabulator::tabulate(unsigned int n, Node* network, Mask mask, Value i) {
   if (i >= n) {
     if (mask) {
       vector<pair<Ratio, Node*>>& entry = lookup_table[mask];
