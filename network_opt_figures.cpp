@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
   int entry134 = network_opt::coder.encode({0,2,3});
   std::cout << "\\begin{table}[t]" << std::endl;
   std::cout << "\\begin{center}" << std::endl;
-  std::cout << "\\small" << endl;
+  std::cout << "\\small" << std::endl;
   std::cout << "\\begin{tabular}{|cr|c|cr|}\\cline{1-2}\\cline{4-5}" << std::endl;
   std::cout << "Subcircuit & Resistance & & ";
   std::cout << "Subcircuit & Resistance \\\\\\cline{1-2}\\cline{4-5}" << std::endl;
