@@ -16,86 +16,86 @@ limitations under the License.
 int main(int argc, char *argv[]) {
   Node* network = NULL;
 
-  cout << "%%%%%%%% PAGE 3 LEFT TOP %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 3 LEFT TOP %%%%%%%%" << std::endl;
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(6)]][N()[NT(4)][NT(5)]]];
-  visualizer.visualize_schematic(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
   cout << "%%%%%%%% PAGE 3 RIGHT TOP %%%%%%%%" << endl;
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(5)]][N()[NT(4)][NT(6)]]];
-  visualizer.visualize_schematic(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 3 RIGHT BOTTOM %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 3 RIGHT BOTTOM %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[NT(6)[NT({2,5})]][NT(4)]];
-  visualizer.visualize_schematic(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 4 LEFT %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 4 LEFT %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[N(6)[NT({2,5})]][NT(4)]];
-  visualizer.visualize_tree(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_tree(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 5 LEFT(A) %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 5 LEFT(A) %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[N()[NT({2,5,6})]][NT(4)]];
-  visualizer.visualize_tree(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_tree(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 5 LEFT(B) %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 5 LEFT(B) %%%%%%%%" << std::endl;
   network = &N()[N()[NT(1)][NT(3)][NT(4)]][NT(7)[N()[NT({2,5,6})]]];
-  visualizer.visualize_tree(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_tree(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 5 RIGHT TOP %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 5 RIGHT TOP %%%%%%%%" << std::endl;
   Tabulator tabulator(3);
   tabulator.tabulate(7);
   int entry256 = coder.encode({1,4,5});
   int entry134 = coder.encode({0,2,3});
-  cout << "\\begin{table}[t]" << endl;
-  cout << "\\begin{center}" << endl;
-  cout << "\\small" << endl;
-  cout << "\\begin{tabular}{|cr|c|cr|}\\cline{1-2}\\cline{4-5}" << endl;
-  cout << "Subcircuit & Resistance & & ";
-  cout << "Subcircuit & Resistance \\\\\\cline{1-2}\\cline{4-5}" << endl;
+  std::cout << "\\begin{table}[t]" << std::endl;
+  std::cout << "\\begin{center}" << std::endl;
+  std::cout << "\\small" << endl;
+  std::cout << "\\begin{tabular}{|cr|c|cr|}\\cline{1-2}\\cline{4-5}" << std::endl;
+  std::cout << "Subcircuit & Resistance & & ";
+  std::cout << "Subcircuit & Resistance \\\\\\cline{1-2}\\cline{4-5}" << std::endl;
   for (int i = 0; i < 8; ++i) {
     auto subcircuit256 = tabulator.lookup_table[entry256][i];
     auto subcircuit134 = tabulator.lookup_table[entry134][i];
-    cout << "$" << subcircuit256.second->to_string(true) << "$ & $";
-    if (subcircuit256.first.denominator() == 1) cout << subcircuit256.first.numerator();
-    else cout << "\\sfrac{" << subcircuit256.first.numerator() << "}{" << subcircuit256.first.denominator() << "}";
-    cout << "\\ \\Omega \\quad$ & & ";
-    cout << "$" << subcircuit134.second->to_string(true) << "$ & $";
-    if (subcircuit134.first.denominator() == 1) cout << subcircuit134.first.numerator();
-    else cout << "\\sfrac{" << subcircuit134.first.numerator() << "}{" << subcircuit134.first.denominator() << "}";
-    cout << "\\ \\Omega \\quad$\\\\" << endl;
+    std::cout << "$" << subcircuit256.second->to_string(true) << "$ & $";
+    if (subcircuit256.first.denominator() == 1) std::cout << subcircuit256.first.numerator();
+    else std::cout << "\\sfrac{" << subcircuit256.first.numerator() << "}{" << subcircuit256.first.denominator() << "}";
+    std::cout << "\\ \\Omega \\quad$ & & ";
+    std::cout << "$" << subcircuit134.second->to_string(true) << "$ & $";
+    if (subcircuit134.first.denominator() == 1) std::cout << subcircuit134.first.numerator();
+    else std::cout << "\\sfrac{" << subcircuit134.first.numerator() << "}{" << subcircuit134.first.denominator() << "}";
+    std::cout << "\\ \\Omega \\quad$\\\\" << endl;
   }
-  cout << "\\cline{1-2}\\cline{4-5}" << endl;
-  cout << "\\multicolumn{2}{c}{(a) $\\mathcal{C}(\\{2,5,6\\})$} & \\multicolumn{1}{c}{} & ";
-  cout << "\\multicolumn{2}{c}{(b) $\\mathcal{C}(\\{1,3,4\\})$}" << endl;
-  cout << "\\end{tabular}" << endl;
-  cout << "\\caption{Subcircuit configurations sorted by resistance.}" << endl;
-  cout << "\\label{configs}" << endl;
-  cout << "\\end{center}" << endl;
-  cout << "\\end{table}" << endl;
-  cout << endl;
+  std::cout << "\\cline{1-2}\\cline{4-5}" << std::endl;
+  std::cout << "\\multicolumn{2}{c}{(a) $\\mathcal{C}(\\{2,5,6\\})$} & \\multicolumn{1}{c}{} & ";
+  std::cout << "\\multicolumn{2}{c}{(b) $\\mathcal{C}(\\{1,3,4\\})$}" << std::endl;
+  std::cout << "\\end{tabular}" << std::endl;
+  std::cout << "\\caption{Subcircuit configurations sorted by resistance.}" << std::endl;
+  std::cout << "\\label{configs}" << std::endl;
+  std::cout << "\\end{center}" << std::endl;
+  std::cout << "\\end{table}" << std::endl;
+  std::cout << std::endl;
 
-  cout << "%%%%%%%% PAGE 5 RIGHT BOTTOM %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 5 RIGHT BOTTOM %%%%%%%%" << std::endl;
   network = &N()[N()[NT({2,5,6})]][NT(7)][N()[NT({1,3,4})]];
-  visualizer.visualize_tree(cout, network, 7);
-  cout << endl;
+  visualizer.visualize_tree(std::cout, network, 7);
+  std::cout << std::endl;
   delete network;
 
-  cout << "%%%%%%%% PAGE 7 (LEFT) %%%%%%%%" << endl;
+  std::cout << "%%%%%%%% PAGE 7 (LEFT) %%%%%%%%" << std::endl;
   SERIES = E12_SERIES;
   network = &N()[N({0,5})][N()[N()[N(1)][N()[N(7)[N()[N(9)[N({2,11})]][N({4,8})]]]]][N()[N(3)][N({6,10})]]];
-  visualizer.visualize_schematic(cout, network, 12);
-  cout << endl;
+  visualizer.visualize_schematic(std::cout, network, 12);
+  std::cout << std::endl;
   delete network;
 
   cout << "%%%%%%%% PAGE 7 (RIGHT) %%%%%%%%" << endl;
