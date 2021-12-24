@@ -64,7 +64,7 @@ std::string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
   if (!values.empty() && !children.empty()) WRITEOP(s, op1, mathmode);
   for (auto value = values.begin(); value != values.end(); ++value) {
     if (value != values.begin()) WRITEOP(s, op1, mathmode);
-    auto v = rational_cast<long long>(SERIES[*value] * 10);
+    auto v = boost::rational_cast<long long>(SERIES[*value] * 10);
     s += std::to_string(v / 10);
     if (v % 10) s += "." + std::to_string(v % 10);
   }
