@@ -37,20 +37,20 @@ void test_network_evaluator() {
   network_opt::Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
-  assert(network_evaluator.evaluate_cost(network, 5) == Ratio(220, 1));
+  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(220, 1));
   delete network;
 
   network = &N()[N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)]];
-  assert(network_evaluator.evaluate_cost(network, 5) == Ratio(90245, 18769));
+  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(90245, 18769));
   delete network;
 
   network = &N()[NT(1)][N()[NT(2)][N()[NT(3)][N()[NT(4)][NT(5)]]]];
-  assert(network_evaluator.evaluate_cost(network, 5) == Ratio(4156, 4225));
+  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(4156, 4225));
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]][NT(8)];
-  assert(network_evaluator.evaluate_cost(network, 8,  1) == Ratio(217, 1));
-  assert(network_evaluator.evaluate_cost(network, 8, -1) == Ratio(4211777, 49729));
+  assert(network_opt::network_evaluator.evaluate_cost(network, 8,  1) == Ratio(217, 1));
+  assert(network_opt::network_evaluator.evaluate_cost(network, 8, -1) == Ratio(4211777, 49729));
   delete network;
 }
 
