@@ -126,7 +126,7 @@ Ratio Bounder::bound(const Node* network, unsigned int n) {
   return max( GET_COST(lower_bound, n),
              -GET_COST(upper_bound, n));
 }
-  
+
 Node* Expander::expandable() {
   while (!stack.empty()) {
     Node* node = stack.back(); stack.pop_back();
@@ -173,11 +173,11 @@ Node* Tabulator::binary_search(const Node* network, Node* expandable, const Valu
     expandable->children.push_back(entry[mid].second);
     Ratio total = network_evaluator.evaluate_total(network);
     Ratio cost = GET_COST(total, n);
-    if (cost < 0) cost = -cost;
-    if (best_cost < 0 || best_cost > cost) {
-      best_cost = cost; best_idx = mid;
+    Ratio abs_cost = (cost > 0) ? cost : -cost;
+    if (best_cost < 0 || best_cost > abs_cost) {
+      best_cost = abs_cost; best_idx = mid;
     }
-    if (total * total < n) lo = mid + 1; else hi = mid;
+    if (cost < 0) lo = mid + 1; else hi = mid;
     expandable->children.pop_back();
   }
   return entry[best_idx].second;
@@ -196,11 +196,11 @@ std::pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expan
     expandable_1->children.push_back(entry_1[hi].second);
     Ratio total = network_evaluator.evaluate_total(network);
     Ratio cost = GET_COST(total, n);
-    if (cost < 0) cost = -cost;
-    if (best_cost < 0 || best_cost > cost) {
-      best_cost = cost; best_lo = lo; best_hi = hi;
+    Ratio abs_cost = (cost > 0) ? cost : -cost;
+    if (best_cost < 0 || best_cost > abs_cost) {
+      best_cost = abs_cost; best_lo = lo; best_hi = hi;
     }
-    if (total * total < n) lo += 1; else hi -= 1;
+    if (cost < 0) lo += 1; else hi -= 1;
     expandable_1->children.pop_back();
     expandable_0->children.pop_back();
   }
