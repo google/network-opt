@@ -57,7 +57,7 @@ void Node::leafify() {
   }
 }
 
-std::string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
+std::string Node::to_string(const Problem& problem, bool mathmode, bool top, char op1, char op2) const {
   std::string s = "";
   if (!top && values.size() + children.size() > 1) s += "(";
   for (auto child = children.begin(); child != children.end(); ++child) {
@@ -69,7 +69,7 @@ std::string Node::to_string(bool mathmode, bool top, char op1, char op2) const {
   if (!values.empty() && !children.empty()) WRITEOP(s, op1, mathmode);
   for (auto value = values.begin(); value != values.end(); ++value) {
     if (value != values.begin()) WRITEOP(s, op1, mathmode);
-    auto v = boost::rational_cast<long long>(SERIES[*value] * 10);
+    auto v = boost::rational_cast<long long>(problem[*value] * 10);
     s += std::to_string(v / 10);
     if (v % 10) s += "." + std::to_string(v % 10);
   }
@@ -327,7 +327,7 @@ void Solver::solve(const Problem& problem, Node* network) {
 
 void print_summary(std::ostream& os, const Problem& problem, Node* network, const std::string& prefix) {
   Ratio total = network_evaluator.evaluate_total(problem, network);
-  os << prefix << "Solution: " << network->to_string() << std::endl;
+  os << prefix << "Solution: " << network->to_string(problem) << std::endl;
   os << prefix << " Network: " << network->to_network() << std::endl;
   os << std::setprecision(16);
   os << prefix << "  Target: " << std::sqrt(problem.size()) << std::endl;
