@@ -31,6 +31,9 @@ limitations under the License.
 #define WRITEOP(s, op, mathmode) { if (op == '+' && mathmode) s += "$+$"; else s += op; }
 #define GET_COST(total, n) (total * total - n)
 //#define GET_COST(total, n) (total - PI_RATIO)
+//#define GET_COST(total, n) (total - E_RATIO)
+//#define GET_COST(total, n) (total - PHI_RATIO)
+//#define GET_COST(total, n) (total - SQRT_RATIO)
 
 using boost::multiprecision::cpp_int;
 using Mask = unsigned int;
