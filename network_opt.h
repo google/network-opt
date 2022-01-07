@@ -48,6 +48,10 @@ extern Ratio* SERIES;
 extern Ratio PI_RATIO;
 
 namespace network_opt {
+    
+struct Problem {
+  static std::vector<Ratio> elements;
+}
 
 struct Node {
   Values values; Values hidden; std::list<Node*> children; Ratio ratio;
