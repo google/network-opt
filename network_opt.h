@@ -128,7 +128,7 @@ struct Solver {
   void solve(const Problem& problem, Node* network);
 };
 
-void print_summary(std::ostream& os, Node* network, const Problem& problem, const std::string& prefix);
+void print_summary(std::ostream& os, const Problem& problem, Node* network, const std::string& prefix);
 
 }
 
