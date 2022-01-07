@@ -96,14 +96,14 @@ std::string Node::to_network(char op1, char op2) const {
   return s;
 }
 
-Ratio NetworkEvaluator::evaluate_total(const Node* node, int bound, char op1, char op2) {
+Ratio NetworkEvaluator::evaluate_total(const Problem& problem, const Node* node, int bound, char op1, char op2) {
   char op = (bound == 1) ? '+' : '|';
   Ratio result;
   if (!node->values.empty()) {
     Ratio subresult;
     char valueop = (node->values.size() > 2 || !node->children.empty()) ? op : op1;
     for (auto value : node->values) {
-      subresult += (valueop == '+') ? SERIES[value] : 1 / SERIES[value];
+      subresult += (valueop == '+') ? problem[value] : 1 / problem[value];
     }
     result += (valueop == '+') ? subresult : 1 / subresult;
     if (op1 == '|') result = 1 / result;
@@ -115,19 +115,19 @@ Ratio NetworkEvaluator::evaluate_total(const Node* node, int bound, char op1, ch
   return (op1 == '+') ? result : 1 / result;
 }
 
-Ratio NetworkEvaluator::evaluate_cost(const Node* node, unsigned int n, int bound) {
+Ratio NetworkEvaluator::evaluate_cost(const Problem& problem, const Node* node, int bound) {
   Ratio total = evaluate_total(node, bound);
-  Ratio cost = GET_COST(total, n);
+  Ratio cost = GET_COST(total, problem.size());
   return (cost > 0) ? cost : -cost;
 }
 
 NetworkEvaluator network_evaluator;
 
-Ratio Bounder::bound(const Node* network, unsigned int n) {
-  Ratio lower_bound = network_evaluator.evaluate_total(network, -1);
-  Ratio upper_bound = network_evaluator.evaluate_total(network,  1);
-  return max( GET_COST(lower_bound, n),
-             -GET_COST(upper_bound, n));
+Ratio Bounder::bound(const Node* network, const Problem& problem) {
+  Ratio lower_bound = network_evaluator.evaluate_total(problem, network, -1);
+  Ratio upper_bound = network_evaluator.evaluate_total(problem, network,  1);
+  return max( GET_COST(lower_bound, problem.size()),
+             -GET_COST(upper_bound, problem.size()));
 }
 
 Node* Expander::expandable() {
@@ -158,15 +158,15 @@ Mask SubsetCoder::encode(const Values& values) {
 
 SubsetCoder coder;
 
-void Tabulator::tabulate(unsigned int n) {
+void Tabulator::tabulate(const Problem& problem) {
   clear();
-  lookup_table.resize(1 << n);
+  lookup_table.resize(1 << problem.size());
   Node* network = &N();
   tabulate(n, network);
   delete network;
 }
 
-Node* Tabulator::binary_search(const Node* network, Node* expandable, const Values& values, unsigned int n) {
+Node* Tabulator::binary_search(const Node* network, Node* expandable, const Values& values, const Problem& problem) {
   Mask mask = coder.encode(values);
   std::vector<std::pair<Ratio, Node*>>& entry = lookup_table[mask];
   int lo = 0, hi = entry.size(), best_idx = -1;
@@ -175,7 +175,7 @@ Node* Tabulator::binary_search(const Node* network, Node* expandable, const Valu
     int mid = (lo + hi) / 2;
     expandable->children.push_back(entry[mid].second);
     Ratio total = network_evaluator.evaluate_total(network);
-    Ratio cost = GET_COST(total, n);
+    Ratio cost = GET_COST(total, problem.size());
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
       best_cost = abs_cost; best_idx = mid;
@@ -187,7 +187,7 @@ Node* Tabulator::binary_search(const Node* network, Node* expandable, const Valu
 }
 
 std::pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expandable_0,
-    Node* expandable_1, const Values& values_0, const Values& values_1, unsigned int n) {
+    Node* expandable_1, const Values& values_0, const Values& values_1, const Problem& problem) {
   Mask mask_0 = coder.encode(values_0), mask_1 = coder.encode(values_1);
   std::vector<std::pair<Ratio, Node*>>& entry_0 = lookup_table[mask_0],
                                         entry_1 = lookup_table[mask_1];
@@ -198,7 +198,7 @@ std::pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expan
     expandable_0->children.push_back(entry_0[lo].second);
     expandable_1->children.push_back(entry_1[hi].second);
     Ratio total = network_evaluator.evaluate_total(network);
-    Ratio cost = GET_COST(total, n);
+    Ratio cost = GET_COST(total, problem.size());
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
       best_cost = abs_cost; best_lo = lo; best_hi = hi;
@@ -215,8 +215,8 @@ void Tabulator::clear() {
   lookup_table.clear();
 }
 
-void Tabulator::tabulate(unsigned int n, Node* network, Mask mask, Value i) {
-  if (i >= n) {
+void Tabulator::tabulate(const Problem& problem, Node* network, Mask mask, Value i) {
+  if (i >= problem.size()) {
     if (mask) {
       std::vector<std::pair<Ratio, Node*>>& entry = lookup_table[mask];
       tabulate(entry, network);
@@ -258,11 +258,11 @@ void Tabulator::tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* netw
   expandable->values = values;
 }
 
-Node* Solver::solve(unsigned int n) {
+Node* Solver::solve(const Problem& problem) {
   clear();
   Node* network = &N();
-  for (Value i = 0; i < n; ++i) network->values.push_back(i);
-  if (tabulator) tabulator->tabulate(n);
+  for (Value i = 0; i < problem.size(); ++i) network->values.push_back(i);
+  if (tabulator) tabulator->tabulate(problem);
   solve(n, network);
   delete network;
   return best_network;
@@ -273,13 +273,13 @@ void Solver::clear() {
   best_network = NULL;
 }
 
-void Solver::solve(unsigned int n, Node* network) {
+void Solver::solve(const Problem& problem, Node* network) {
   if (bounder && best_network && bounder->bound(network, n) >= best_network->ratio)
     return;
   Expander expander(network);
   Node* expandable_0 = expander.expandable();
   if (!expandable_0) {
-    Ratio cost = network_evaluator.evaluate_cost(network, n);
+    Ratio cost = network_evaluator.evaluate_cost(problem, network);
     if (!best_network || best_network->ratio > cost) {
       if (best_network) delete best_network;
       best_network = network->clone();
@@ -293,7 +293,7 @@ void Solver::solve(unsigned int n, Node* network) {
   if (tabulator && !expandable_1 && values_0.size() <= tabulator->m) {
     Node* node = tabulator->binary_search(network, expandable_0, values_0, n);
     expandable_0->children.push_back(node);
-    solve(n, network);
+    solve(problem, network);
     expandable_0->children.pop_back();
   } else if (tabulator && expandable_1 && !expandable_2 &&
              values_0.size() <= tabulator->m &&
@@ -303,7 +303,7 @@ void Solver::solve(unsigned int n, Node* network) {
         network, expandable_0, expandable_1, values_0, values_1, n);
     expandable_0->children.push_back(nodes.first);
     expandable_1->children.push_back(nodes.second);
-    solve(n, network);
+    solve(problem, network);
     expandable_1->children.pop_back();
     expandable_0->children.pop_back();
     expandable_1->values = values_1;
@@ -325,15 +325,15 @@ void Solver::solve(unsigned int n, Node* network) {
   expandable_0->values = values_0;
 }
 
-void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix) {
-  Ratio total = network_evaluator.evaluate_total(network);
+void print_summary(std::ostream& os, Node* network, const Problem& problem, const std::string& prefix) {
+  Ratio total = network_evaluator.evaluate_total(problem, network);
   os << prefix << "Solution: " << network->to_string() << std::endl;
   os << prefix << " Network: " << network->to_network() << std::endl;
   os << std::setprecision(16);
-  os << prefix << "  Target: " << std::sqrt(n) << std::endl;
+  os << prefix << "  Target: " << std::sqrt(problem.size()) << std::endl;
   os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << std::endl;
   os << std::setprecision(4);
-  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(n)) << std::endl;
+  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(problem.size())) << std::endl;
 }
 
 }
