@@ -162,7 +162,7 @@ void Tabulator::tabulate(const Problem& problem) {
   clear();
   lookup_table.resize(1 << problem.size());
   Node* network = &N();
-  tabulate(n, network);
+  tabulate(problem, network);
   delete network;
 }
 
@@ -174,7 +174,7 @@ Node* Tabulator::binary_search(const Problem& problem, const Node* network, Node
   while (lo < hi) {
     int mid = (lo + hi) / 2;
     expandable->children.push_back(entry[mid].second);
-    Ratio total = network_evaluator.evaluate_total(network);
+    Ratio total = network_evaluator.evaluate_total(problem, network);
     Ratio cost = GET_COST(total, problem.size());
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
@@ -197,7 +197,7 @@ std::pair<Node*,Node*> Tabulator::linear_search(const Problem& problem, const No
   while (lo < entry_0.size() && hi >= 0) {
     expandable_0->children.push_back(entry_0[lo].second);
     expandable_1->children.push_back(entry_1[hi].second);
-    Ratio total = network_evaluator.evaluate_total(network);
+    Ratio total = network_evaluator.evaluate_total(problem, network);
     Ratio cost = GET_COST(total, problem.size());
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
@@ -263,7 +263,7 @@ Node* Solver::solve(const Problem& problem) {
   Node* network = &N();
   for (Value i = 0; i < problem.size(); ++i) network->values.push_back(i);
   if (tabulator) tabulator->tabulate(problem);
-  solve(n, network);
+  solve(problem, network);
   delete network;
   return best_network;
 }
