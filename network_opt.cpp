@@ -24,7 +24,10 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
 Ratio* SERIES = INT_SERIES;
-Ratio PI_RATIO = Ratio(314159265358979,100000000000000);
+Ratio E_RATIO    = Ratio(271828182845905,100000000000000);
+Ratio PI_RATIO   = Ratio(314159265358979,100000000000000);
+Ratio PHI_RATIO  = Ratio(161803398874989,100000000000000);
+Ratio SQRT_RATIO = Ratio(141421356237309,100000000000000);
 
 namespace network_opt {
 
