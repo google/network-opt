@@ -51,7 +51,8 @@ namespace network_opt {
     
 struct Problem {
   std::vector<Ratio> elements;
-  unsigned int size() { return elements.size(); }
+  unsigned int size() const { return elements.size(); }
+  Ratio& operator[](unsigned int idx) const { return elements[idx]; }
 };
 
 struct Node {
