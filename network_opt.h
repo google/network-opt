@@ -76,14 +76,14 @@ struct Node {
 };
 
 struct NetworkEvaluator {
-  Ratio evaluate_total(const Node* node, int bound = 0, char op1 = '+', char op2 = '|');
-  Ratio evaluate_cost(const Node* node, unsigned int n, int bound = 0);
+  Ratio evaluate_total(const Problem& problem, const Node* node, int bound = 0, char op1 = '+', char op2 = '|');
+  Ratio evaluate_cost(const Problem& problem, const Node* node, int bound = 0);
 };
 
 extern NetworkEvaluator network_evaluator;
 
 struct Bounder {
-  Ratio bound(const Node* network, unsigned int n);
+  Ratio bound(const Node* network, const Problem& problem);
 };
 
 struct Expander {
@@ -111,7 +111,7 @@ struct Tabulator {
 
  private:
   void clear();
-  void tabulate(unsigned int n, Node* network, Mask mask = 0, Value i = 0);
+  void tabulate(const Problem& problem, Node* network, Mask mask = 0, Value i = 0);
   void tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* network);
 };
 
@@ -120,14 +120,14 @@ struct Solver {
       bounder(b), tabulator(t), best_network(NULL) {}
   ~Solver() { clear(); }
 
-  Node* solve(unsigned int n);
+  Node* solve(const Problem& problem);
 
  private: Bounder* bounder; Tabulator* tabulator; Node* best_network;
   void clear();
-  void solve(unsigned int n, Node* network);
+  void solve(const Problem& problem, Node* network);
 };
 
-void print_summary(std::ostream& os, Node* network, unsigned int n, const std::string& prefix);
+void print_summary(std::ostream& os, Node* network, const Problem& problem, const std::string& prefix);
 
 }
 
