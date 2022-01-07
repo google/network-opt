@@ -325,7 +325,7 @@ void Solver::solve(const Problem& problem, Node* network) {
   expandable_0->values = values_0;
 }
 
-void print_summary(std::ostream& os, Node* network, const Problem& problem, const std::string& prefix) {
+void print_summary(std::ostream& os, const Problem& problem, Node* network, const std::string& prefix) {
   Ratio total = network_evaluator.evaluate_total(problem, network);
   os << prefix << "Solution: " << network->to_string() << std::endl;
   os << prefix << " Network: " << network->to_network() << std::endl;
