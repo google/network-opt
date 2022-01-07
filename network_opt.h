@@ -113,7 +113,7 @@ struct Tabulator {
  private:
   void clear();
   void tabulate(const Problem& problem, Node* network, Mask mask = 0, Value i = 0);
-  void tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* network);
+  void tabulate(const Problem& problem, Node* network, std::vector<std::pair<Ratio, Node*>>& entry);
 };
 
 struct Solver {
