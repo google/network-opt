@@ -84,7 +84,7 @@ struct NetworkEvaluator {
 extern NetworkEvaluator network_evaluator;
 
 struct Bounder {
-  Ratio bound(const Node* network, const Problem& problem);
+  Ratio bound(const Problem& problem, const Node* network);
 };
 
 struct Expander {
