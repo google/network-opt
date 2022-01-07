@@ -109,14 +109,14 @@ Ratio NetworkEvaluator::evaluate_total(const Problem& problem, const Node* node,
     if (op1 == '|') result = 1 / result;
   }
   for (auto child : node->children) {
-    Ratio subresult = child->ratio ? child->ratio : evaluate_total(child, bound, op2, op1);
+    Ratio subresult = child->ratio ? child->ratio : evaluate_total(problem, child, bound, op2, op1);
     result += (op1 == '+') ? subresult : 1 / subresult;
   }
   return (op1 == '+') ? result : 1 / result;
 }
 
 Ratio NetworkEvaluator::evaluate_cost(const Problem& problem, const Node* node, int bound) {
-  Ratio total = evaluate_total(node, bound);
+  Ratio total = evaluate_total(problem, node, bound);
   Ratio cost = GET_COST(total, problem.size());
   return (cost > 0) ? cost : -cost;
 }
