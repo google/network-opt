@@ -70,7 +70,7 @@ struct Node {
   Node& operator[](Node& node);
   Node* clone();
   void leafify();
-  std::string to_string(bool mathmode = false, bool top = true, char op1 = '+', char op2 = '|') const;
+  std::string to_string(const Problem& problem, bool mathmode = false, bool top = true, char op1 = '+', char op2 = '|') const;
   std::string to_network(char op1 = '+', char op2 = '|') const;
 
  private: Node() {}
