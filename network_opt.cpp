@@ -291,7 +291,7 @@ void Solver::solve(const Problem& problem, Node* network) {
   Node* expandable_2 = expandable_1 ? expander.expandable() : NULL;
   Values values_0 = expandable_0->values; expandable_0->values.clear();
   if (tabulator && !expandable_1 && values_0.size() <= tabulator->m) {
-    Node* node = tabulator->binary_search(network, expandable_0, values_0, n);
+    Node* node = tabulator->binary_search(problem, network, expandable_0, values_0);
     expandable_0->children.push_back(node);
     solve(problem, network);
     expandable_0->children.pop_back();
@@ -300,7 +300,7 @@ void Solver::solve(const Problem& problem, Node* network) {
              expandable_1->values.size() <= tabulator->m) {
     Values values_1 = expandable_1->values; expandable_1->values.clear();
     std::pair<Node*,Node*> nodes = tabulator->linear_search(
-        network, expandable_0, expandable_1, values_0, values_1, n);
+        problem, network, expandable_0, expandable_1, values_0, values_1);
     expandable_0->children.push_back(nodes.first);
     expandable_1->children.push_back(nodes.second);
     solve(problem, network);
@@ -315,7 +315,7 @@ void Solver::solve(const Problem& problem, Node* network) {
     for (Mask mask = 0; mask < max_mask; ++mask) {
       coder.decode(mask, values_0, child->values, expandable_0->values);
       if (has_children || !expandable_0->values.empty() || expandable_0 == network)
-        solve(n, network);
+        solve(problem, network);
       child->values.clear();
       expandable_0->values.clear();
     }
