@@ -104,4 +104,40 @@ int main(int argc, char *argv[]) {
   network_opt::visualizer.visualize_schematic(std::cout, network, 15);
   std::cout << std::endl;
   delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, MINE) %%%%%%%%" << std::endl;
+  network = &N()[N(0)][N()[N(1)][N(4)[N(2)][N(5)[N()[N()[N(9)[N(7)[N()[N(3)][N({6,8})]]]]]]]]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, THEIRS) %%%%%%%%" << std::endl;
+  network = &N()[N()[NT(5)][N()[N()[NT(8)][N()[NT(7)][N()[NT(10)][NT({3,4})]]]][N()[NT(2)][NT(6)][NT({1,9})]]]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of sqrt(2), MINE) %%%%%%%%" << std::endl;
+  network = &N()[N()[N()[N()[N()[N()[N(0)][N(9)[N(3)[N(11)[N({2,7})]]]]]]][N()[N()[N(10)[N(1)][N(5)]]]]][N(4)][N({6,8})]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of phi, MINE) %%%%%%%%" << std::endl;
+  network = &N()[N(8)[N()[N()[N()[N(4)[N(0)][N()[N(1)][N({6,7})]]]]][N()[N()[N({5,10})]]]][N(11)[N(2)][N(9)]][N(3)]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of e, MINE) %%%%%%%%" << std::endl;
+  network = &N()[N(11)[N()[N()[N(6)[N({0,5})]]]][N(2)[N(9)[N()[N()[N()[N(1)][N()[N(3)][N(8)[N()[N(4)][N({7,10})]]]]]]]]]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of pi, MINE) %%%%%%%%" << std::endl;
+  network = &N()[N(10)[N()[N()[N()[N(6)[N(4)[N({0,1})]]]]][N()[N()[N(11)[N()[N(2)][N({3,8})]]]]]][N(7)[N({5,9})]]];
+  network_opt::visualizer.visualize_schematic(std::cout, network, 7);
+  std::cout << std::endl;
+  delete network;
 }
