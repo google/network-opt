@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   if (series == "INT") SERIES = INT_SERIES;
   if (series == "ONE") SERIES = ONE_SERIES;
   network_opt::Problem problem;
-  for (int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
+  for (unsigned int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::Solver solver(bounder, tabulator);
