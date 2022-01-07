@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::Solver solver(bounder, tabulator);
-  network_opt::Node* network = solver.solve(n);
+  network_opt::Node* network = solver.solve(problem);
   network_opt::print_summary(std::cout, network, n, "");
   delete tabulator;
   delete bounder;
