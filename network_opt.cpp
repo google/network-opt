@@ -123,7 +123,7 @@ Ratio NetworkEvaluator::evaluate_cost(const Problem& problem, const Node* node, 
 
 NetworkEvaluator network_evaluator;
 
-Ratio Bounder::bound(const Node* network, const Problem& problem) {
+Ratio Bounder::bound(const Problem& problem, const Node* network) {
   Ratio lower_bound = network_evaluator.evaluate_total(problem, network, -1);
   Ratio upper_bound = network_evaluator.evaluate_total(problem, network,  1);
   return max( GET_COST(lower_bound, problem.size()),
@@ -274,7 +274,7 @@ void Solver::clear() {
 }
 
 void Solver::solve(const Problem& problem, Node* network) {
-  if (bounder && best_network && bounder->bound(network, n) >= best_network->ratio)
+  if (bounder && best_network && bounder->bound(problem, network) >= best_network->ratio)
     return;
   Expander expander(network);
   Node* expandable_0 = expander.expandable();
