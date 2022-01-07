@@ -50,7 +50,7 @@ extern Ratio PI_RATIO;
 namespace network_opt {
     
 struct Problem {
-  static std::vector<Ratio> elements;
+  std::vector<Ratio> elements;
 };
 
 struct Node {
