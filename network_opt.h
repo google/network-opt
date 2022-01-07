@@ -41,12 +41,6 @@ using Ratio = boost::rational<cpp_int>;
 using Value = unsigned int;
 using Values = std::list<Value>;
 
-extern Ratio INT_SERIES[];
-extern Ratio E12_SERIES[];
-extern Ratio ONE_SERIES[];
-extern Ratio* SERIES;
-extern Ratio PI_RATIO;
-
 namespace network_opt {
     
 struct Problem {
