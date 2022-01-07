@@ -224,7 +224,7 @@ void Tabulator::tabulate(const Problem& problem, Node* network, Mask mask, Value
     }
     return;
   }
-  tabulate(n, network, mask, i + 1);
+  tabulate(problem, network, mask, i + 1);
   if (network->values.size() < m) {
     network->values.push_back(i);
     tabulate(n, network, mask | (1 << i), i + 1);
@@ -232,12 +232,12 @@ void Tabulator::tabulate(const Problem& problem, Node* network, Mask mask, Value
   }
 }
 
-void Tabulator::tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* network) {
+void Tabulator::tabulate(const Problem& problem, std::vector<std::pair<Ratio, Node*>>& entry, Node* network) {
   Expander expander(network);
   Node* expandable = expander.expandable();
   if (!expandable) {
     Node* clone = network->clone();
-    clone->ratio = network_evaluator.evaluate_total(network);
+    clone->ratio = network_evaluator.evaluate_total(problem, network);
     entry.push_back(std::pair<Ratio, Node*>(clone->ratio, clone));
     return;
   }
@@ -249,7 +249,7 @@ void Tabulator::tabulate(std::vector<std::pair<Ratio, Node*>>& entry, Node* netw
   for (Mask mask = 0; mask < max_mask; ++mask) {
     coder.decode(mask, values, child->values, expandable->values);
     if (has_children || !expandable->values.empty() || expandable == network)
-      tabulate(entry, network);
+      tabulate(problem, entry, network);
     child->values.clear();
     expandable->values.clear();
   }
