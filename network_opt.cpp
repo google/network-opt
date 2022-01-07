@@ -166,7 +166,7 @@ void Tabulator::tabulate(const Problem& problem) {
   delete network;
 }
 
-Node* Tabulator::binary_search(const Node* network, Node* expandable, const Values& values, const Problem& problem) {
+Node* Tabulator::binary_search(const Problem& problem, const Node* network, Node* expandable, const Values& values) {
   Mask mask = coder.encode(values);
   std::vector<std::pair<Ratio, Node*>>& entry = lookup_table[mask];
   int lo = 0, hi = entry.size(), best_idx = -1;
@@ -186,8 +186,8 @@ Node* Tabulator::binary_search(const Node* network, Node* expandable, const Valu
   return entry[best_idx].second;
 }
 
-std::pair<Node*,Node*> Tabulator::linear_search(const Node* network, Node* expandable_0,
-    Node* expandable_1, const Values& values_0, const Values& values_1, const Problem& problem) {
+std::pair<Node*,Node*> Tabulator::linear_search(const Problem& problem, const Node* network, Node* expandable_0,
+    Node* expandable_1, const Values& values_0, const Values& values_1) {
   Mask mask_0 = coder.encode(values_0), mask_1 = coder.encode(values_1);
   std::vector<std::pair<Ratio, Node*>>& entry_0 = lookup_table[mask_0],
                                         entry_1 = lookup_table[mask_1];
