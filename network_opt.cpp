@@ -63,8 +63,8 @@ std::string Node::to_string(const Problem& problem, bool mathmode, bool top, cha
   for (auto child = children.begin(); child != children.end(); ++child) {
     if (child != children.begin()) WRITEOP(s, op1, mathmode);
     bool subtop = top && values.size() == 0 && children.size() == 1;
-    s += (*child)->ratio ? (*child)->to_string(mathmode, subtop)
-                         : (*child)->to_string(mathmode, subtop, op2, op1);
+    s += (*child)->ratio ? (*child)->to_string(problem, mathmode, subtop)
+                         : (*child)->to_string(problem, mathmode, subtop, op2, op1);
   }
   if (!values.empty() && !children.empty()) WRITEOP(s, op1, mathmode);
   for (auto value = values.begin(); value != values.end(); ++value) {
