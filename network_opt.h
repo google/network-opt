@@ -105,10 +105,10 @@ struct Tabulator {
   Tabulator(unsigned int _m) : m(_m) { }
   ~Tabulator() { clear(); }
 
-  void tabulate(unsigned int n);
-  Node* binary_search(const Node* network, Node* expandable, const Values& values, unsigned int n);
-  std::pair<Node*,Node*> linear_search(const Node* network, Node* expandable_0,
-      Node* expandable_1, const Values& values_0, const Values& values_1, unsigned int n);
+  void tabulate(const Problem& problem);
+  Node* binary_search(const Problem& problem, const Node* network, Node* expandable, const Values& values);
+  std::pair<Node*,Node*> linear_search(const Problem& problem, const Node* network, Node* expandable_0,
+      Node* expandable_1, const Values& values_0, const Values& values_1);
 
  private:
   void clear();
