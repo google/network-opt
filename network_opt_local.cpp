@@ -139,11 +139,11 @@ int main(int argc, char *argv[]) {
   SERIES = (series == "INT") ? INT_SERIES : E12_SERIES;
   network_opt::Problem problem;
   for (unsigned int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
-  network_opt::Bounder* bounder = b ? new Bounder() : NULL;
-  network_opt::Tabulator* tabulator = t ? new Tabulator(t) : NULL;
+  network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
+  network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::LocalSolver solver(bounder, tabulator);
   network_opt::Node* network = solver.solve(n);
-  print_summary(cout, network, n, "");
+  print_summary(cout, problem, network, "");
   delete tabulator;
   delete bounder;
 }
