@@ -16,26 +16,28 @@ limitations under the License.
 #include <chrono>
 #include "stdlib.h"
 
+namespace network_opt {
+
 struct LocalSolver {
   LocalSolver(Bounder* b = NULL, Tabulator* t = NULL) :
       bounder(b), tabulator(t), best_network(NULL) {}
   ~LocalSolver() { clear(); }
 
-  Node* solve(unsigned int n) {
+  Node* solve(const Problem& problem) {
     auto start = chrono::steady_clock::now();
     clear();
     Ratio best_cost = 0;
-    if (tabulator) tabulator->tabulate(n);
+    if (tabulator) tabulator->tabulate(problem);
     while (true) {
       expandables.clear();
       vector<Value> values;
-      for (Value i = 0; i < n; ++i) values.push_back(i);
+      for (Value i = 0; i < problem.size(); ++i) values.push_back(i);
       random_shuffle(values.begin(), values.end());
       Node* network = &N();
       for (auto value : values) network->values.push_back(value);
       randomly_expand(network);
-      iteratively_improve(network, n);
-      Ratio cost = network_evaluator.evaluate_cost(network, n);
+      iteratively_improve(problem, network);
+      Ratio cost = network_evaluator.evaluate_cost(problem, network);
       if (best_network == NULL || best_cost > cost) {
         clear();
         best_cost = cost;
@@ -43,7 +45,7 @@ struct LocalSolver {
         auto end = chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::seconds>(end - start);
         cout << "Found after " << duration.count() << " seconds: " << endl;
-        print_summary(cout, best_network, n, "");
+        print_summary(cout, problem, best_network, "");
         cout << endl;
       }
       delete network;
@@ -84,8 +86,8 @@ struct LocalSolver {
     for (auto child : node->children) randomly_expand(child);
   }
 
-  void iteratively_improve(Node* network, unsigned int n) {
-    Ratio best_cost = network_evaluator.evaluate_cost(network, n);
+  void iteratively_improve(const Problem& problem, Node* network) {
+    Ratio best_cost = network_evaluator.evaluate_cost(problem, network);
     while (true) {
       int idx_0 = rand() % expandables.size();
       int idx_1 = rand() % expandables.size();
@@ -93,7 +95,7 @@ struct LocalSolver {
         Node* expandable = expandables[idx_0];
         expandable->children.clear();
         Node* node = tabulator->binary_search(
-            network, expandable, expandable->hidden, n);
+            problem, network, expandable, expandable->hidden);
         expandable->children.push_back(node);
       } else {
         Node* expandable_0 = expandables[idx_0];
@@ -101,17 +103,19 @@ struct LocalSolver {
         expandable_0->children.clear();
         expandable_1->children.clear();
         pair<Node*,Node*> nodes = tabulator->linear_search(
-          network, expandable_0, expandable_1, expandable_0->hidden,
-          expandable_1->hidden, n);
+          problem, network, expandable_0, expandable_1, expandable_0->hidden,
+          expandable_1->hidden);
         expandable_0->children.push_back(nodes.first);
         expandable_1->children.push_back(nodes.second);
       }
-      Ratio cost = network_evaluator.evaluate_cost(network, n);
+      Ratio cost = network_evaluator.evaluate_cost(problem, network);
       if (best_cost <= cost) break;
       best_cost = cost;
     }
   }
 };
+    
+}
 
 int main(int argc, char *argv[]) {
   srand(2022);
@@ -121,10 +125,10 @@ int main(int argc, char *argv[]) {
   unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
   string series = argv[4];
   SERIES = (series == "INT") ? INT_SERIES : E12_SERIES;
-  Bounder* bounder = b ? new Bounder() : NULL;
-  Tabulator* tabulator = t ? new Tabulator(t) : NULL;
-  LocalSolver solver(bounder, tabulator);
-  Node* network = solver.solve(n);
+  network_opt::Bounder* bounder = b ? new Bounder() : NULL;
+  network_opt::Tabulator* tabulator = t ? new Tabulator(t) : NULL;
+  network_opt::LocalSolver solver(bounder, tabulator);
+  network_opt::Node* network = solver.solve(n);
   print_summary(cout, network, n, "");
   delete tabulator;
   delete bounder;
