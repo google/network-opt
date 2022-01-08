@@ -43,7 +43,7 @@ Problem Problem::from_argv(char* argv[]) {
   if (g ==    "PI") { square = false; target = RATIO_PI; }
   if (g ==   "PHI") { square = false; target = RATIO_PHI; }
   if (g == "SQRT2") { square = false; target = RATIO_SQRT2; }
-  return network_opt::Problem problem(series, n, target, square);
+  return Problem(series, n, target, square);
 }
 
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
