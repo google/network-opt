@@ -63,14 +63,14 @@ Ratio Visualizer::get_width() {
 }
 
 // Helper function for writing schematics
-void Visualizer::output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const std::string& s = "") {
+void Visualizer::output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const std::string& s) {
   os << "(" << boost::rational_cast<double>(begin) << "," << boost::rational_cast<double>(end) << ")";
   if (!s.empty()) os << s;
   else os << std::endl;
 }
 
 // First, calculate the area for each visual -- coords will all be zero.
-void Visualizer::calc_area(Node* node, Visual& visual, char op1 = '+', char op2 = '|') {
+void Visualizer::calc_area(Node* node, Visual& visual, char op1) {
   if (node->children.empty()) {
     visual = Visual(0, 0, get_width(), 1, node->values.front());
     return;
@@ -90,7 +90,7 @@ void Visualizer::calc_area(Node* node, Visual& visual, char op1 = '+', char op2 
 }
 
 // Second, use all the areas to compute the coordinates of each visual.
-void Visualizer::update_coords(Visual& visual, const Ratio& _x = 0, const Ratio& _y = 0, char op1 = '+', char op2 = '|') {
+void Visualizer::update_coords(Visual& visual, const Ratio& _x, const Ratio& _y, char op1, char op2) {
   Ratio x = _x, y = _y;
   visual.x += x;
   visual.y += y;
@@ -118,7 +118,7 @@ void Visualizer::flip(Visual& visual, Ratio height) {
 }
 
 // Fourth, use the given visual to compute the tikzpicture code.
-void Visualizer::visualize_schematic(std::ostream& os, Visual& visual, char op1 = '+', char op2 = '|') {
+void Visualizer::visualize_schematic(std::ostream& os, Visual& visual, char op1, char op2) {
   if (visual.v != INT_MAX) {
     // Draw a simple resistor
     output_coord(os, (visual.x    ), (visual.y), " to ");
