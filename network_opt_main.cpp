@@ -22,11 +22,12 @@ int main(int argc, char *argv[]) {
   Ratio* series = network_opt::E12_SERIES;
   Ratio target = Ratio(n);
   bool square = true;
-  if (s == "INT") series = network_opt::INT_SERIES;
-  if (s == "ONE") series = network_opt::ONE_SERIES;
-  if (t ==   "E") { square = false; target = network_opt::RATIO_E; }
-  if (t ==  "PI") { square = false; target = network_opt::RATIO_PI; }
-  if (t == "PHI") { square = false; target = network_opt::RATIO_PHI; }
+  if (s ==   "INT") series = network_opt::INT_SERIES;
+  if (s ==   "ONE") series = network_opt::ONE_SERIES;
+  if (t ==     "E") { square = false; target = network_opt::RATIO_E; }
+  if (t ==    "PI") { square = false; target = network_opt::RATIO_PI; }
+  if (t ==   "PHI") { square = false; target = network_opt::RATIO_PHI; }
+  if (t == "SQRT2") { square = false; target = network_opt::RATIO_SQRT2; }
   network_opt::Problem problem(series, n, target, square);
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
