@@ -14,10 +14,10 @@ limitations under the License.
 #include "network_opt_utils.h"
 
 int main(int argc, char *argv[]) {
-  network_opt::Problem problem7(7);
-  network_opt::Problem problem10(10);
-  network_opt::Problem problem12(12);
-  network_opt::Problem problem15(15);
+  network_opt::Problem problem7(network_opt::INT_SERIES, 7, 7);
+  network_opt::Problem problem10(network_opt::INT_SERIES, 10);
+  network_opt::Problem problem12(network_opt::E12_SERIES, 12);
+  network_opt::Problem problem15(network_opt::ONE_SERIES, 15);
   network_opt::Node* network = NULL;
 
   std::cout << "%%%%%%%% PAGE 3 LEFT TOP %%%%%%%%" << std::endl;
