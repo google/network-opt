@@ -43,6 +43,10 @@ using Values = std::list<Value>;
 
 namespace network_opt {
 
+extern Ratio INT_SERIES[];
+extern Ratio E12_SERIES[];
+extern Ratio ONE_SERIES[];
+
 struct Problem {
   std::vector<Ratio> elements;
   Ratio target;
