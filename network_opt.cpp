@@ -117,7 +117,7 @@ Ratio NetworkEvaluator::evaluate_total(const Problem& problem, const Node* node,
 
 Ratio NetworkEvaluator::evaluate_cost(const Problem& problem, const Node* node, int bound) {
   Ratio total = evaluate_total(problem, node, bound);
-  Ratio cost = GET_COST(total, problem.size());
+  Ratio cost = problem.get_cost(total);
   return (cost > 0) ? cost : -cost;
 }
 
