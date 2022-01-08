@@ -31,6 +31,21 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
 
+Problem Problem::from_argv(char* argv[]) {
+  unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
+  std::string s = argv[4], g = argv[5];
+  Ratio* series = E12_SERIES;
+  Ratio target = Ratio(n);
+  bool square = true;
+  if (s ==   "INT") series = INT_SERIES;
+  if (s ==   "ONE") series = ONE_SERIES;
+  if (g ==     "E") { square = false; target = RATIO_E; }
+  if (g ==    "PI") { square = false; target = RATIO_PI; }
+  if (g ==   "PHI") { square = false; target = RATIO_PHI; }
+  if (g == "SQRT2") { square = false; target = RATIO_SQRT2; }
+  return network_opt::Problem problem(series, n, target, square);
+}
+
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
 Node* Node::clone() {
