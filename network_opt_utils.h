@@ -36,7 +36,9 @@ struct Visualizer {
   void flip(Visual& visual, Ratio height);
   void visualize_schematic(std::ostream& os, const Problem& problem, Visual& visual, char op1 = '+', char op2 = '|');
   void visualize_tree(std::ostream& os, Node* node, char op1, char op2);
-} visualizer;
+};
+    
+extern Visualizer visualizer;
 
 }
 
