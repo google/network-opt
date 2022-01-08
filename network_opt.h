@@ -43,17 +43,6 @@ using Values = std::list<Value>;
 
 namespace network_opt {
 
-Ratio INT_SERIES[] = {Ratio( 1), Ratio( 2), Ratio( 3), Ratio( 4),
-                      Ratio( 5), Ratio( 6), Ratio( 7), Ratio( 8),
-                      Ratio( 9), Ratio(10), Ratio(11), Ratio(12)};
-Ratio E12_SERIES[] = {Ratio(10,10), Ratio(12,10), Ratio(15,10), Ratio(18,10),
-                      Ratio(22,10), Ratio(27,10), Ratio(33,10), Ratio(39,10),
-                      Ratio(47,10), Ratio(56,10), Ratio(68,10), Ratio(82,10)};
-Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
-                      Ratio(1), Ratio(1), Ratio(1), Ratio(1),
-                      Ratio(1), Ratio(1), Ratio(1), Ratio(1),
-                      Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
-
 struct Problem {
   std::vector<Ratio> elements;
   Ratio target;
