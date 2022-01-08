@@ -46,7 +46,7 @@ namespace network_opt {
 struct Problem {
   std::vector<Ratio> elements;
   Problem() {}
-  Problem(const Ratio e[]) { elements = e; }
+  Problem(unsigned int n) { for (unsigned int i = 1; i <= n; i++) elements.push_back(Ratio(i)); }
   unsigned int size() const { return elements.size(); }
   const Ratio& operator[](unsigned int idx) const { return elements[idx]; }
 };
