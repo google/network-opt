@@ -34,7 +34,7 @@ struct Visualizer {
   void calc_area(Node* node, Visual& visual, char op1 = '+', char op2 = '|');
   void update_coords(Visual& visual, const Ratio& _x = 0, const Ratio& _y = 0, char op1 = '+', char op2 = '|');
   void flip(Visual& visual, Ratio height);
-  void visualize_schematic(std::ostream& os, Visual& visual, char op1 = '+', char op2 = '|');
+  void visualize_schematic(std::ostream& os, const Problem& problem, Visual& visual, char op1 = '+', char op2 = '|');
   void visualize_tree(std::ostream& os, Node* node, char op1, char op2);
 } visualizer;
 
