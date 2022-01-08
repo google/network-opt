@@ -59,7 +59,8 @@ void Visualizer::visualize_tree(std::ostream& os, const Problem& problem, Node* 
 }
 
 Ratio Visualizer::get_width() {
-  return (SERIES != E12_SERIES) ? Ratio(1) : Ratio(3, 2);
+  // return (SERIES != E12_SERIES) ? Ratio(1) : Ratio(3, 2);
+  return Ratio(3, 2);
 }
 
 // Helper function for writing schematics
@@ -151,7 +152,7 @@ void Visualizer::visualize_schematic(std::ostream& os, const Problem& problem, V
       output_coord(os, (visual.x         ), (subvisual.y), " to ");
       output_coord(os, (visual.x + adjust), (subvisual.y));
     }
-    visualize_schematic(os, subvisual, op2, op1);
+    visualize_schematic(os, problem, subvisual, op2, op1);
     // Right horizontal bar *inside* the parallel circuit
     if (op1 == '|' && visual.w > subvisual.w) {
       Ratio adjust = (visual.w - subvisual.w) / 2;
