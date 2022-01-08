@@ -14,51 +14,55 @@ limitations under the License.
 #include "network_opt_utils.h"
 
 int main(int argc, char *argv[]) {
-  network_opt::Problem problem7(network_opt::INT_SERIES, 7, 7);
-  network_opt::Problem problem10(network_opt::INT_SERIES, 10);
-  network_opt::Problem problem12(network_opt::E12_SERIES, 12);
-  network_opt::Problem problem15(network_opt::ONE_SERIES, 15);
+  network_opt::Problem problem_7(       network_opt::INT_SERIES, 7, Ratio(7), true);
+  network_opt::Problem problem_10(      network_opt::INT_SERIES, 10, network_opt::RATIO_E, false);
+  network_opt::Problem problem_12(      network_opt::E12_SERIES, 12, Ratio(12), true);
+  network_opt::Problem problem_12_E(    network_opt::E12_SERIES, 12, network_opt::RATIO_E, false);
+  network_opt::Problem problem_12_PI(   network_opt::E12_SERIES, 12, network_opt::RATIO_PI, false);
+  network_opt::Problem problem_12_PHI(  network_opt::E12_SERIES, 12, network_opt::RATIO_PHI, false);
+  network_opt::Problem problem_12_SQRT2(network_opt::E12_SERIES, 12, network_opt::RATIO_SQRT2, false);
+  network_opt::Problem problem_15(      network_opt::ONE_SERIES, 15, network_opt::RATIO_PI, false);
   network_opt::Node* network = NULL;
 
   std::cout << "%%%%%%%% PAGE 3 LEFT TOP %%%%%%%%" << std::endl;
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(6)]][N()[NT(4)][NT(5)]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem7, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 3 RIGHT TOP %%%%%%%%" << std::endl;
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(5)]][N()[NT(4)][NT(6)]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem7, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 3 RIGHT BOTTOM %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[NT(6)[NT({2,5})]][NT(4)]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem7, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 4 LEFT %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[N(6)[NT({2,5})]][NT(4)]];
-  network_opt::visualizer.visualize_tree(std::cout, problem7, network);
+  network_opt::visualizer.visualize_tree(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 5 LEFT(A) %%%%%%%%" << std::endl;
   network = &N()[NT({1,3})][NT(7)[N()[NT({2,5,6})]][NT(4)]];
-  network_opt::visualizer.visualize_tree(std::cout, problem7, network);
+  network_opt::visualizer.visualize_tree(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 5 LEFT(B) %%%%%%%%" << std::endl;
   network = &N()[N()[NT(1)][NT(3)][NT(4)]][NT(7)[N()[NT({2,5,6})]]];
-  network_opt::visualizer.visualize_tree(std::cout, problem7, network);
+  network_opt::visualizer.visualize_tree(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 5 RIGHT TOP %%%%%%%%" << std::endl;
   network_opt::Tabulator tabulator(3);
-  tabulator.tabulate(problem7);
+  tabulator.tabulate(problem_7);
   int entry256 = network_opt::coder.encode({1,4,5});
   int entry134 = network_opt::coder.encode({0,2,3});
   std::cout << "\\begin{table}[t]" << std::endl;
@@ -91,57 +95,57 @@ int main(int argc, char *argv[]) {
 
   std::cout << "%%%%%%%% PAGE 5 RIGHT BOTTOM %%%%%%%%" << std::endl;
   network = &N()[N()[NT({2,5,6})]][NT(7)][N()[NT({1,3,4})]];
-  network_opt::visualizer.visualize_tree(std::cout, problem7, network);
+  network_opt::visualizer.visualize_tree(std::cout, problem_7, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 7 (LEFT) %%%%%%%%" << std::endl;
   // SERIES = E12_SERIES;
   network = &N()[N({0,5})][N()[N()[N(1)][N()[N(7)[N()[N(9)[N({2,11})]][N({4,8})]]]]][N()[N(3)][N({6,10})]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_12, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 7 (RIGHT) %%%%%%%%" << std::endl;
   // SERIES = ONE_SERIES;
   network = &N()[N(0)][N(1)][N()[N()[N(2)][N(3)][N(4)][N(5)][N()[N(6)][N()[N(7)][N()[N()[N(8)][N(9)][N({10,11})]]]]]][N()[N(12)][N({13,14})]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem15, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_15, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, MINE) %%%%%%%%" << std::endl;
   network = &N()[N(0)][N()[N(1)][N(4)[N(2)][N(5)[N()[N()[N(9)[N(7)[N()[N(3)][N({6,8})]]]]]]]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem10, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_10, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, THEIRS) %%%%%%%%" << std::endl;
   network = &N()[N()[NT(5)][N()[N()[NT(8)][N()[NT(7)][N()[NT(10)][NT({3,4})]]]][N()[NT(2)][NT(6)][NT({1,9})]]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem10, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_10, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (12-resistor of sqrt(2), MINE) %%%%%%%%" << std::endl;
   network = &N()[N()[N()[N()[N()[N()[N(0)][N(9)[N(3)[N(11)[N({2,7})]]]]]]][N()[N()[N(10)[N(1)][N(5)]]]]][N(4)][N({6,8})]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_12_SQRT2, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (12-resistor of phi, MINE) %%%%%%%%" << std::endl;
   network = &N()[N(8)[N()[N()[N()[N(4)[N(0)][N()[N(1)][N({6,7})]]]]][N()[N()[N({5,10})]]]][N(11)[N(2)][N(9)]][N(3)]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_12_PHI, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (12-resistor of e, MINE) %%%%%%%%" << std::endl;
   network = &N()[N(11)[N()[N()[N(6)[N({0,5})]]]][N(2)[N(9)[N()[N()[N()[N(1)][N()[N(3)][N(8)[N()[N(4)][N({7,10})]]]]]]]]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_12_E, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% FRIEDMAN (12-resistor of pi, MINE) %%%%%%%%" << std::endl;
   network = &N()[N(10)[N()[N()[N()[N(6)[N(4)[N({0,1})]]]]][N()[N()[N(11)[N()[N(2)][N({3,8})]]]]]][N(7)[N({5,9})]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
+  network_opt::visualizer.visualize_schematic(std::cout, problem_12_PI, network);
   std::cout << std::endl;
   delete network;
 }
