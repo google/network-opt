@@ -32,7 +32,7 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
 
 Problem Problem::from_argv(char* argv[]) {
-  unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
+  unsigned int n = atoi(argv[3]);
   std::string s = argv[4], g = argv[5];
   Ratio* series = E12_SERIES;
   Ratio target = Ratio(n);
