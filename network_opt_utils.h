@@ -28,13 +28,13 @@ struct Visual {
 };
 
 struct Visualizer {
-  void visualize_schematic(std::ostream& os, Node* network, unsigned int n) {
+  void visualize_schematic(std::ostream& os, const Problem& problem, Node* network) {
     Visual visual;
     Node* leafified = network->clone(); leafified->leafify();
     calc_area(leafified, visual);
     update_coords(visual, ONE_QUARTER);
     flip(visual, visual.h);
-    print_summary(os, network, n, "% ");
+    print_summary(os, problem, network, "% ");
     os << "\\begin{center}" << std::endl;
     os << "\\small" << std::endl;
     os << "\\ctikzset{bipoles/resistor/height=0.1}" << std::endl;
@@ -54,9 +54,9 @@ struct Visualizer {
     delete leafified;
   }
 
-  void visualize_tree(std::ostream& os, Node* network, unsigned int n) {
+  void visualize_tree(std::ostream& os, const Problem& problem, Node* network) {
     Node* leafified = network->clone(); leafified->leafify();
-    print_summary(os, network, n, "% ");
+    print_summary(os, problem, network, "% ");
     os << "\\begin{center}" << std::endl;
     os << "\\small" << std::endl;
     os << "\\begin{forest}" << std::endl;
