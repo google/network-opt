@@ -42,7 +42,7 @@ struct LocalSolver {
     if (tabulator) tabulator->tabulate(problem);
     while (true) {
       expandables.clear();
-      vector<Value> values;
+      std::vector<Value> values;
       for (Value i = 0; i < problem.size(); ++i) values.push_back(i);
       random_shuffle(values.begin(), values.end());
       Node* network = &N();
