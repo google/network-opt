@@ -135,7 +135,7 @@ void test_solver(network_opt::Bounder* bounder = NULL, network_opt::Tabulator* t
   network_opt::Solver solver(bounder, tabulator);
   check_network(solver.solve(network_opt::Problem(2)), Ratio(14, 9));
   check_network(solver.solve(network_opt::Problem(3)), Ratio(3, 4));
-  check_network(solver.solve(network_opt::Problem(3)), Ratio(0, 1));
+  check_network(solver.solve(network_opt::Problem(4)), Ratio(0, 1));
   check_network(solver.solve(network_opt::Problem(5)), Ratio(5, 81));
   check_network(solver.solve(network_opt::Problem(6)), Ratio(278, 178929));
   check_network(solver.solve(network_opt::Problem(7)), Ratio(1, 2304));
