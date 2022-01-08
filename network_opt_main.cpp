@@ -13,8 +13,6 @@ limitations under the License.
 
 #include "network_opt.h"
 
-Ratio* SERIES = INT_SERIES;
-
 int main(int argc, char *argv[]) {
   std::cout << " Command:";
   for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
