@@ -118,11 +118,11 @@ void Visualizer::flip(Visual& visual, Ratio height) {
 }
 
 // Fourth, use the given visual to compute the tikzpicture code.
-void Visualizer::visualize_schematic(std::ostream& os, Visual& visual, char op1, char op2) {
+void Visualizer::visualize_schematic(std::ostream& os, const Problem& problem, Visual& visual, char op1, char op2) {
   if (visual.v != INT_MAX) {
     // Draw a simple resistor
     output_coord(os, (visual.x    ), (visual.y), " to ");
-    auto v = boost::rational_cast<long long>(SERIES[visual.v] * 10);
+    auto v = boost::rational_cast<long long>(problem[visual.v] * 10);
     os << "[R,l=";
     os << v / 10;
     if (v % 10) os << "." << v % 10;
