@@ -18,16 +18,16 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
   std::cout << std::endl;
   unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
-  std::string s = argv[4], t = argv[5];
+  std::string s = argv[4], g = argv[5];
   Ratio* series = network_opt::E12_SERIES;
   Ratio target = Ratio(n);
   bool square = true;
   if (s ==   "INT") series = network_opt::INT_SERIES;
   if (s ==   "ONE") series = network_opt::ONE_SERIES;
-  if (t ==     "E") { square = false; target = network_opt::RATIO_E; }
-  if (t ==    "PI") { square = false; target = network_opt::RATIO_PI; }
-  if (t ==   "PHI") { square = false; target = network_opt::RATIO_PHI; }
-  if (t == "SQRT2") { square = false; target = network_opt::RATIO_SQRT2; }
+  if (g ==     "E") { square = false; target = network_opt::RATIO_E; }
+  if (g ==    "PI") { square = false; target = network_opt::RATIO_PI; }
+  if (g ==   "PHI") { square = false; target = network_opt::RATIO_PHI; }
+  if (g == "SQRT2") { square = false; target = network_opt::RATIO_SQRT2; }
   network_opt::Problem problem(series, n, target, square);
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
