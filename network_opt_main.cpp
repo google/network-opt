@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
   std::cout << " Command:";
   for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
   std::cout << std::endl;
-  unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
+  unsigned int b = atoi(argv[1]), t = atoi(argv[2]), n = atoi(argv[3]);
   std::string s = argv[4], g = argv[5];
   Ratio* series = network_opt::E12_SERIES;
   Ratio target = Ratio(n);
