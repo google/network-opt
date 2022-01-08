@@ -18,12 +18,16 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
   std::cout << std::endl;
   unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
-  std::string series = argv[4];
-  SERIES = E12_SERIES;
-  if (series == "INT") SERIES = INT_SERIES;
-  if (series == "ONE") SERIES = ONE_SERIES;
-  network_opt::Problem problem;
-  for (unsigned int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
+  std::string s, = argv[4], t = argv[5];
+  Ratio* series = network_opt::E12_SERIES;
+  Ratio target = Ratio(n);
+  bool square = true;
+  if (s == "INT") series = network_opt::INT_SERIES;
+  if (s == "ONE") series = network_opt::ONE_SERIES;
+  if (t ==   "E") { square = false; target = network_opt::RATIO_E; }
+  if (t ==  "PI") { square = false; target = network_opt::RATIO_PI; }
+  if (t == "PHI") { square = false; target = network_opt::RATIO_PHI; }
+  network_opt::Problem problem(series, n, target, square);
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::Solver solver(bounder, tabulator);
