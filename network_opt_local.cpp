@@ -122,11 +122,8 @@ int main(int argc, char *argv[]) {
   std::cout << " Command:";
   for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
   std::cout << std::endl;
-  unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
-  std::string series = argv[4];
-  SERIES = (series == "INT") ? INT_SERIES : E12_SERIES;
-  network_opt::Problem problem;
-  for (unsigned int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
+  unsigned int b = atoi(argv[1]), t = atoi(argv[2]);
+  network_opt::Problem problem = network_opt::Problem::from_argv(argv);
   network_opt::Bounder* bounder = b ? new network_opt::Bounder() : NULL;
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::LocalSolver solver(bounder, tabulator);
