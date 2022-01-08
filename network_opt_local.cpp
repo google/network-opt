@@ -36,7 +36,7 @@ struct LocalSolver {
   ~LocalSolver() { clear(); }
 
   Node* solve(const Problem& problem) {
-    auto start = chrono::steady_clock::now();
+    auto start = std::chrono::steady_clock::now();
     clear();
     Ratio best_cost = 0;
     if (tabulator) tabulator->tabulate(problem);
@@ -54,8 +54,8 @@ struct LocalSolver {
         clear();
         best_cost = cost;
         best_network = network->clone();
-        auto end = chrono::steady_clock::now();
-        auto duration = chrono::duration_cast<chrono::seconds>(end - start);
+        auto end = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
         cout << "Found after " << duration.count() << " seconds: " << endl;
         print_summary(cout, problem, best_network, "");
         cout << endl;
