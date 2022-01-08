@@ -29,7 +29,6 @@ struct Visualizer {
   void visualize_tree(std::ostream& os, const Problem& problem, Node* network);
 
  private:
-
   Ratio get_width();
   void output_coord(std::ostream& os, const Ratio& begin, const Ratio& end, const std::string& s = "");
   void calc_area(Node* node, Visual& visual, char op1 = '+', char op2 = '|');
