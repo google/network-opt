@@ -34,7 +34,7 @@ void Visualizer::visualize_schematic(std::ostream& os, const Problem& problem, N
   output_coord(os,           0, (visual.h - ONE_HALF), " to ");
   os << "[short,*-] ";
   output_coord(os, ONE_QUARTER, (visual.h - ONE_HALF));
-  visualize_schematic(os, visual);
+  visualize_schematic(os, problem, visual);
   output_coord(os, (visual.w + ONE_QUARTER), (visual.h - ONE_HALF), " to ");
   os << "[short,-*] ";
   output_coord(os, (visual.w + ONE_HALF   ), (visual.h - ONE_HALF));
