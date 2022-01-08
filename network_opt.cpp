@@ -126,8 +126,8 @@ NetworkEvaluator network_evaluator;
 Ratio Bounder::bound(const Problem& problem, const Node* network) {
   Ratio lower_bound = network_evaluator.evaluate_total(problem, network, -1);
   Ratio upper_bound = network_evaluator.evaluate_total(problem, network,  1);
-  return max( GET_COST(lower_bound, problem.size()),
-             -GET_COST(upper_bound, problem.size()));
+  return max( problem.get_cost(lower_bound),
+             -problem.get_cost(upper_bound));
 }
 
 Node* Expander::expandable() {
@@ -175,7 +175,7 @@ Node* Tabulator::binary_search(const Problem& problem, const Node* network, Node
     int mid = (lo + hi) / 2;
     expandable->children.push_back(entry[mid].second);
     Ratio total = network_evaluator.evaluate_total(problem, network);
-    Ratio cost = GET_COST(total, problem.size());
+    Ratio cost = problem.get_cost(total);
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
       best_cost = abs_cost; best_idx = mid;
@@ -198,7 +198,7 @@ std::pair<Node*,Node*> Tabulator::linear_search(const Problem& problem, const No
     expandable_0->children.push_back(entry_0[lo].second);
     expandable_1->children.push_back(entry_1[hi].second);
     Ratio total = network_evaluator.evaluate_total(problem, network);
-    Ratio cost = GET_COST(total, problem.size());
+    Ratio cost = problem.get_cost(total);
     Ratio abs_cost = (cost > 0) ? cost : -cost;
     if (best_cost < 0 || best_cost > abs_cost) {
       best_cost = abs_cost; best_lo = lo; best_hi = hi;
