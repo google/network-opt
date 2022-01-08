@@ -56,9 +56,9 @@ struct LocalSolver {
         best_network = network->clone();
         auto end = std::chrono::steady_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
-        cout << "Found after " << duration.count() << " seconds: " << endl;
-        print_summary(cout, problem, best_network, "");
-        cout << endl;
+        std::cout << "Found after " << duration.count() << " seconds: " << std::endl;
+        print_summary(std::cout, problem, best_network, "");
+        std::cout << std::endl;
       }
       delete network;
     }
@@ -131,11 +131,11 @@ struct LocalSolver {
 
 int main(int argc, char *argv[]) {
   srand(2022);
-  cout << " Command:";
-  for (int i = 0; i < argc; ++i) cout << " " << argv[i];
-  cout << endl;
+  std::cout << " Command:";
+  for (int i = 0; i < argc; ++i) std::cout << " " << argv[i];
+  std::cout << std::endl;
   unsigned int n = atoi(argv[1]), t = atoi(argv[2]), b = atoi(argv[3]);
-  string series = argv[4];
+  std::string series = argv[4];
   SERIES = (series == "INT") ? INT_SERIES : E12_SERIES;
   network_opt::Problem problem;
   for (unsigned int i = 0; i < n; i++) problem.elements.push_back(SERIES[i]);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
   network_opt::Tabulator* tabulator = t ? new network_opt::Tabulator(t) : NULL;
   network_opt::LocalSolver solver(bounder, tabulator);
   network_opt::Node* network = solver.solve(n);
-  print_summary(cout, problem, network, "");
+  print_summary(std::cout, problem, network, "");
   delete tabulator;
   delete bounder;
 }
