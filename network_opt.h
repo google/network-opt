@@ -43,6 +43,11 @@ using Values = std::list<Value>;
 
 namespace network_opt {
 
+extern Ratio E_RATIO;
+extern Ratio PI_RATIO;
+extern Ratio PHI_RATIO;
+extern Ratio SQRT2_RATIO;
+
 extern Ratio INT_SERIES[];
 extern Ratio E12_SERIES[];
 extern Ratio ONE_SERIES[];
