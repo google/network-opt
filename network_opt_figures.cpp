@@ -96,14 +96,14 @@ int main(int argc, char *argv[]) {
   delete network;
 
   std::cout << "%%%%%%%% PAGE 7 (LEFT) %%%%%%%%" << std::endl;
-  SERIES = E12_SERIES;
+  // SERIES = E12_SERIES;
   network = &N()[N({0,5})][N()[N()[N(1)][N()[N(7)[N()[N(9)[N({2,11})]][N({4,8})]]]]][N()[N(3)][N({6,10})]]];
   network_opt::visualizer.visualize_schematic(std::cout, problem12, network);
   std::cout << std::endl;
   delete network;
 
   std::cout << "%%%%%%%% PAGE 7 (RIGHT) %%%%%%%%" << std::endl;
-  SERIES = ONE_SERIES;
+  // SERIES = ONE_SERIES;
   network = &N()[N(0)][N(1)][N()[N()[N(2)][N(3)][N(4)][N(5)][N()[N(6)][N()[N(7)][N()[N()[N(8)][N(9)][N({10,11})]]]]]][N()[N(12)][N({13,14})]]];
   network_opt::visualizer.visualize_schematic(std::cout, problem15, network);
   std::cout << std::endl;
