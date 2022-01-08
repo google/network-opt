@@ -70,7 +70,7 @@ void Visualizer::output_coord(std::ostream& os, const Ratio& begin, const Ratio&
 }
 
 // First, calculate the area for each visual -- coords will all be zero.
-void Visualizer::calc_area(Node* node, Visual& visual, char op1) {
+void Visualizer::calc_area(Node* node, Visual& visual, char op1, char op2) {
   if (node->children.empty()) {
     visual = Visual(0, 0, get_width(), 1, node->values.front());
     return;
