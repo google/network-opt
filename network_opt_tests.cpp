@@ -14,16 +14,18 @@ limitations under the License.
 #include "network_opt_utils.h"
 
 void test_node() {
+  network_opt::Problem problem5(5);
+  network_opt::Problem problem7(7);
   network_opt::Node* network = NULL;
-  
+
   network = &N()[NT(1)][N()[NT(2)][NT(3)][NT(4)]][NT(5)];
-  assert(network->to_string() == "1+(2|3|4)+5");
-  assert(network->to_string(true) == "1$+$(2|3|4)$+$5");
+  assert(network->to_string(problem5) == "1+(2|3|4)+5");
+  assert(network->to_string(problem5, true) == "1$+$(2|3|4)$+$5");
   assert(network->to_network() == "N()[N(0)][N()[N(1)][N(2)][N(3)]][N(4)]");
   delete network;
 
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(5)]][N()[NT(4)][NT(6)]]];
-  assert(network->to_string() == "(3+7)|(1+2+5)|(4+6)");
+  assert(network->to_string(problem7) == "(3+7)|(1+2+5)|(4+6)");
   delete network;
 
   network = &N()[NT({1,3})][NT(7)[NT(6)[NT({2,5})]][NT(4)]];
@@ -34,23 +36,25 @@ void test_node() {
 }
 
 void test_network_evaluator() {
+  network_opt::Problem problem5(5);
+  network_opt::Problem problem8(8);
   network_opt::Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
-  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(220, 1));
+  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(220, 1));
   delete network;
 
   network = &N()[N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)]];
-  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(90245, 18769));
+  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(90245, 18769));
   delete network;
 
   network = &N()[NT(1)][N()[NT(2)][N()[NT(3)][N()[NT(4)][NT(5)]]]];
-  assert(network_opt::network_evaluator.evaluate_cost(network, 5) == Ratio(4156, 4225));
+  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(4156, 4225));
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]][NT(8)];
-  assert(network_opt::network_evaluator.evaluate_cost(network, 8,  1) == Ratio(217, 1));
-  assert(network_opt::network_evaluator.evaluate_cost(network, 8, -1) == Ratio(4211777, 49729));
+  assert(network_opt::network_evaluator.evaluate_cost(problem8, network,  1) == Ratio(217, 1));
+  assert(network_opt::network_evaluator.evaluate_cost(problem8, network, -1) == Ratio(4211777, 49729));
   delete network;
 }
 
@@ -94,8 +98,9 @@ void test_expander() {
 }
 
 void test_tabulator() {
+  network_opt::Problem problem7(7);
   network_opt::Tabulator tabulator(3);
-  tabulator.tabulate(7);
+  tabulator.tabulate(problem7);
   network_opt::Node* network = NULL;
 
   network = &N()[N()[NT(1)][NT(3)]][N()[NT({2,5,6})][NT(4)][NT(7)]];
@@ -103,7 +108,7 @@ void test_tabulator() {
   network_opt::Node* expandable_a = expander_a.expandable();
   assert(expandable_a->values == Values({1,4,5})); // means {2,5,6}
   Values values_a = expandable_a->values; expandable_a->values.clear();
-  network_opt::Node* replacement_a = tabulator.binary_search(network, expandable_a, values_a, 7);
+  network_opt::Node* replacement_a = tabulator.binary_search(problem7, network, expandable_a, values_a);
   assert(replacement_a->ratio == Ratio(52, 7));
   delete network;
 
@@ -116,7 +121,7 @@ void test_tabulator() {
   Values values_b0 = expandable_b0->values; expandable_b0->values.clear();
   Values values_b1 = expandable_b1->values; expandable_b1->values.clear();
   std::pair<network_opt::Node*,network_opt::Node*> replacement_b = tabulator.linear_search(
-      network, expandable_b0, expandable_b1, values_b0, values_b1, 7);
+      problem7, network, expandable_b0, expandable_b1, values_b0, values_b1);
   assert(replacement_b.first->ratio  == Ratio(15, 13));
   assert(replacement_b.second->ratio == Ratio(12, 19));
   delete network;
@@ -128,12 +133,12 @@ void check_network(network_opt::Node* network, Ratio ratio) {
 
 void test_solver(network_opt::Bounder* bounder = NULL, network_opt::Tabulator* tabulator = NULL) {
   network_opt::Solver solver(bounder, tabulator);
-  check_network(solver.solve(2), Ratio(14, 9));
-  check_network(solver.solve(3), Ratio(3, 4));
-  check_network(solver.solve(4), Ratio(0, 1));
-  check_network(solver.solve(5), Ratio(5, 81));
-  check_network(solver.solve(6), Ratio(278, 178929));
-  check_network(solver.solve(7), Ratio(1, 2304));
+  check_network(solver.solve(network_opt::Problem(2)), Ratio(14, 9));
+  check_network(solver.solve(network_opt::Problem(3)), Ratio(3, 4));
+  check_network(solver.solve(network_opt::Problem(3)), Ratio(0, 1));
+  check_network(solver.solve(network_opt::Problem(5)), Ratio(5, 81));
+  check_network(solver.solve(network_opt::Problem(6)), Ratio(278, 178929));
+  check_network(solver.solve(network_opt::Problem(7)), Ratio(1, 2304));
 }
 
 int main() {
