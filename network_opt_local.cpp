@@ -69,7 +69,7 @@ struct LocalSolver {
   Bounder* bounder;
   Tabulator* tabulator;
   Node* best_network;
-  vector<Node*> expandables;
+  std::vector<Node*> expandables;
 
   void clear() {
     if (best_network) delete best_network;
@@ -82,7 +82,7 @@ struct LocalSolver {
       node->hidden = node->values;
       node->values.clear();
       Mask mask = coder.encode(node->hidden);
-      vector<pair<Ratio, Node*>>& entry = tabulator->lookup_table[mask];
+      std::vector<std::pair<Ratio, Node*>>& entry = tabulator->lookup_table[mask];
       unsigned int idx = rand() % entry.size();
       node->children.push_back(entry[idx].second);
       return;
@@ -114,7 +114,7 @@ struct LocalSolver {
         Node* expandable_1 = expandables[idx_1];
         expandable_0->children.clear();
         expandable_1->children.clear();
-        pair<Node*,Node*> nodes = tabulator->linear_search(
+        std::pair<Node*,Node*> nodes = tabulator->linear_search(
           problem, network, expandable_0, expandable_1, expandable_0->hidden,
           expandable_1->hidden);
         expandable_0->children.push_back(nodes.first);
