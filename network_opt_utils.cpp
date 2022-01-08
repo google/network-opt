@@ -17,6 +17,8 @@ const Ratio ONE_HALF = Ratio(1, 2);
 const Ratio ONE_QUARTER = Ratio(1, 4);
 
 namespace network_opt {
+    
+Visualizer visualizer;
 
 void Visualizer::visualize_schematic(std::ostream& os, const Problem& problem, Node* network) {
   Visual visual;
