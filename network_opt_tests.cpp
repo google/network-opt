@@ -14,8 +14,8 @@ limitations under the License.
 #include "network_opt_utils.h"
 
 void test_node() {
-  network_opt::Problem problem5(5);
-  network_opt::Problem problem7(7);
+  network_opt::Problem problem5(network_opt::INT_SERIES, 5, Ratio(5), true);
+  network_opt::Problem problem7(network_opt::INT_SERIES, 7, Ratio(7), true);
   network_opt::Node* network = NULL;
 
   network = &N()[NT(1)][N()[NT(2)][NT(3)][NT(4)]][NT(5)];
@@ -36,8 +36,8 @@ void test_node() {
 }
 
 void test_network_evaluator() {
-  network_opt::Problem problem5(5);
-  network_opt::Problem problem8(8);
+  network_opt::Problem problem5(network_opt::INT_SERIES, 5, Ratio(5), true);
+  network_opt::Problem problem8(network_opt::INT_SERIES, 8, Ratio(8), true);
   network_opt::Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
@@ -98,7 +98,7 @@ void test_expander() {
 }
 
 void test_tabulator() {
-  network_opt::Problem problem7(7);
+  network_opt::Problem problem7(network_opt::INT_SERIES, 7, Ratio(7), true);
   network_opt::Tabulator tabulator(3);
   tabulator.tabulate(problem7);
   network_opt::Node* network = NULL;
@@ -133,12 +133,12 @@ void check_network(network_opt::Node* network, Ratio ratio) {
 
 void test_solver(network_opt::Bounder* bounder = NULL, network_opt::Tabulator* tabulator = NULL) {
   network_opt::Solver solver(bounder, tabulator);
-  check_network(solver.solve(network_opt::Problem(2)), Ratio(14, 9));
-  check_network(solver.solve(network_opt::Problem(3)), Ratio(3, 4));
-  check_network(solver.solve(network_opt::Problem(4)), Ratio(0, 1));
-  check_network(solver.solve(network_opt::Problem(5)), Ratio(5, 81));
-  check_network(solver.solve(network_opt::Problem(6)), Ratio(278, 178929));
-  check_network(solver.solve(network_opt::Problem(7)), Ratio(1, 2304));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 2, Ratio(2), true)), Ratio(14, 9));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 3, Ratio(3), true)), Ratio(3, 4));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 4, Ratio(4), true)), Ratio(0, 1));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 5, Ratio(5), true)), Ratio(5, 81));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 6, Ratio(6), true)), Ratio(278, 178929));
+  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 7, Ratio(7), true)), Ratio(1, 2304));
 }
 
 int main() {
