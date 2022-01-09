@@ -131,8 +131,9 @@ void check_network(network_opt::Node* network, Ratio ratio) {
   assert(network->ratio == ratio);
 }
 
-void test_solver(network_opt::Bounder* bounder = NULL, network_opt::Tabulator* tabulator = NULL) {
-  network_opt::Solver solver(bounder, tabulator);
+void test_solver(bool b = false, unsigned int t = true) {
+  network_opt::Params params(b, t);
+  network_opt::Solver solver(params);
   check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 2, Ratio(2), true)), Ratio(14, 9));
   check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 3, Ratio(3), true)), Ratio(3, 4));
   check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 4, Ratio(4), true)), Ratio(0, 1));
@@ -147,12 +148,8 @@ int main() {
   test_expander();
   test_tabulator();
   test_solver();
-
-  network_opt::Bounder bounder;
-  test_solver(&bounder);
-
-  network_opt::Tabulator tabulator(3);
-  test_solver(&bounder, &tabulator);
+  test_solver(true);
+  test_solver(true, 3);
 
   std::cout << "*** TESTS PASS ***" << std::endl;
 }
