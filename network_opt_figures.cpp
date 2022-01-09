@@ -74,11 +74,11 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < 8; ++i) {
     auto subcircuit256 = tabulator.lookup_table[entry256][i];
     auto subcircuit134 = tabulator.lookup_table[entry134][i];
-    std::cout << "$" << subcircuit256.second->to_string(problem7, true) << "$ & $";
+    std::cout << "$" << subcircuit256.second->to_string(problem_7, true) << "$ & $";
     if (subcircuit256.first.denominator() == 1) std::cout << subcircuit256.first.numerator();
     else std::cout << "\\sfrac{" << subcircuit256.first.numerator() << "}{" << subcircuit256.first.denominator() << "}";
     std::cout << "\\ \\Omega \\quad$ & & ";
-    std::cout << "$" << subcircuit134.second->to_string(problem7, true) << "$ & $";
+    std::cout << "$" << subcircuit134.second->to_string(problem_7, true) << "$ & $";
     if (subcircuit134.first.denominator() == 1) std::cout << subcircuit134.first.numerator();
     else std::cout << "\\sfrac{" << subcircuit134.first.numerator() << "}{" << subcircuit134.first.denominator() << "}";
     std::cout << "\\ \\Omega \\quad$\\\\" << std::endl;
