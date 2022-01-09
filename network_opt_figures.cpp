@@ -17,10 +17,10 @@ int main(int argc, char *argv[]) {
   network_opt::Problem problem_7(       network_opt::INT_SERIES, 7, Ratio(7), true);
   network_opt::Problem problem_10(      network_opt::INT_SERIES, 10, network_opt::RATIO_E, false);
   network_opt::Problem problem_12(      network_opt::E12_SERIES, 12, Ratio(12), true);
-  network_opt::Problem problem_12_E(    network_opt::E12_SERIES, 12, network_opt::RATIO_E, false);
-  network_opt::Problem problem_12_PI(   network_opt::E12_SERIES, 12, network_opt::RATIO_PI, false);
-  network_opt::Problem problem_12_PHI(  network_opt::E12_SERIES, 12, network_opt::RATIO_PHI, false);
-  network_opt::Problem problem_12_SQRT2(network_opt::E12_SERIES, 12, network_opt::RATIO_SQRT2, false);
+  network_opt::Problem problem_12_E(    network_opt::INT_SERIES, 12, network_opt::RATIO_E, false);
+  network_opt::Problem problem_12_PI(   network_opt::INT_SERIES, 12, network_opt::RATIO_PI, false);
+  network_opt::Problem problem_12_PHI(  network_opt::INT_SERIES, 12, network_opt::RATIO_PHI, false);
+  network_opt::Problem problem_12_SQRT2(network_opt::INT_SERIES, 12, network_opt::RATIO_SQRT2, false);
   network_opt::Problem problem_15(      network_opt::ONE_SERIES, 15, network_opt::RATIO_PI, false);
   network_opt::Node* network = NULL;
 
