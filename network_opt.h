@@ -128,10 +128,22 @@ struct Tabulator {
   void tabulate(const Problem& problem, Node* network, std::vector<std::pair<Ratio, Node*>>& entry);
 };
 
+struct Params {
+  bool b;
+  unsigned int m;
+  Params(bool _b, unsigned int _m) : b(_b), m(_m) {}
+};
+
 struct Solver {
-  Solver(Bounder* b = NULL, Tabulator* t = NULL) :
-      bounder(b), tabulator(t), best_network(NULL) {}
-  ~Solver() { clear(); }
+  Solver(const Params& params) : bounder(NULL), tabulator(NULL), best_network(NULL) {
+    if (params.b) bounder = new Bounder();
+    if (params.m) tabulator = new Tabulator(params.m);
+  }
+  ~Solver() {
+    clear();
+    if (tabulator) delete tabulator;
+    if (bounder) delete bounder;
+  }
 
   Node* solve(const Problem& problem);
 
