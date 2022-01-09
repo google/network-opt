@@ -19,9 +19,15 @@ limitations under the License.
 namespace network_opt {
 
 struct LocalSolver {
-  LocalSolver(const Params) :
-      bounder(b), tabulator(t), best_network(NULL) {}
-  ~LocalSolver() { clear(); }
+  LocalSolver(const Params& params) : bounder(NULL), tabulator(NULL), best_network(NULL) {
+    if (params.b) bounder = new Bounder();
+    if (params.m) tabulator = new Tabulator(params.m);
+  }
+  ~LocalSolver() {
+    clear();
+    if (tabulator) delete tabulator;
+    if (bounder) delete bounder;
+  }
 
   Node* solve(const Problem& problem) {
     auto start = std::chrono::steady_clock::now();
