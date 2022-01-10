@@ -62,11 +62,8 @@ struct Problem {
 
   unsigned int size() const { return elements.size(); }
   const Ratio& operator[](unsigned int idx) const { return elements[idx]; }
-  Ratio get_total() const {
-    return square ? total * total : total;
-  }
   Ratio get_cost(const Ratio& total) const {
-    return get_total() - target;
+    return (square ? total * total : total) - target;
   }
 };
 
