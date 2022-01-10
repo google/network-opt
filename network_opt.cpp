@@ -341,14 +341,18 @@ void Solver::solve(const Problem& problem, Node* network) {
 }
 
 void print_summary(std::ostream& os, const Problem& problem, Node* network, const std::string& prefix) {
-  Ratio total = network_evaluator.evaluate_total(problem, network);
   os << prefix << "Solution: " << network->to_string(problem) << std::endl;
   os << prefix << " Network: " << network->to_network() << std::endl;
   os << std::setprecision(16);
-  os << prefix << "  Target: " << std::sqrt(problem.size()) << std::endl;
+  double target = boost::rational_cast<double>(problem.target);
+  if (problem.square) target = std::sqrt(target);
+  os << prefix << "  Target: " << target << std::endl;
+  Ratio total = network_evaluator.evaluate_total(problem, network);
   os << prefix << "   Total: " << boost::rational_cast<double>(total) << " (" << total << ")" << std::endl;
   os << std::setprecision(4);
-  os << prefix << "    Cost: " << std::abs(boost::rational_cast<double>(total) - std::sqrt(problem.size())) << std::endl;
+  double cost = boost::rational_cast<double>(problem.get_cost(total));
+  if (problem.square) cost = std::sqrt(cost);
+  os << prefix << "    Cost: " << cost << std::endl;
 }
 
 }
