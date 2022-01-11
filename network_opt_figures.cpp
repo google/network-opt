@@ -111,37 +111,37 @@ int main(int argc, char *argv[]) {
   std::cout << std::endl;
   delete network;
 
-  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, MINE) %%%%%%%%" << std::endl;
-  network = &N()[N(0)][N()[N(1)][N(4)[N(2)][N(5)[N()[N()[N(9)[N(7)[N()[N(3)][N({6,8})]]]]]]]]];
-  network_opt::visualizer.visualize_schematic(std::cout, problem_10, network);
-  std::cout << std::endl;
-  delete network;
-
-  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, THEIRS) %%%%%%%%" << std::endl;
+  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e, *previous*) %%%%%%%%" << std::endl;
   network = &N()[N()[NT(5)][N()[N()[NT(8)][N()[NT(7)][N()[NT(10)][NT({3,4})]]]][N()[NT(2)][NT(6)][NT({1,9})]]]];
   network_opt::visualizer.visualize_schematic(std::cout, problem_10, network);
   std::cout << std::endl;
   delete network;
 
-  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of pi, MINE) %%%%%%%%" << std::endl;
+  std::cout << "%%%%%%%% FRIEDMAN (10-resistor of e) %%%%%%%%" << std::endl;
+  network = &N()[N(0)][N()[N(1)][N(4)[N(2)][N(5)[N()[N()[N(9)[N(7)[N()[N(3)][N({6,8})]]]]]]]]];
+  network_opt::visualizer.visualize_schematic(std::cout, problem_10, network);
+  std::cout << std::endl;
+  delete network;
+
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of pi) %%%%%%%%" << std::endl;
   network = &N()[N(10)[N()[N()[N()[N(6)[N(4)[N({0,1})]]]]][N()[N()[N(11)[N()[N(2)][N({3,8})]]]]]][N(7)[N({5,9})]]];
   network_opt::visualizer.visualize_schematic(std::cout, problem_12_PI, network);
   std::cout << std::endl;
   delete network;
 
-  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of e, MINE) %%%%%%%%" << std::endl;
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of e) %%%%%%%%" << std::endl;
   network = &N()[N(11)[N()[N()[N(6)[N({0,5})]]]][N(2)[N(9)[N()[N()[N()[N(1)][N()[N(3)][N(8)[N()[N(4)][N({7,10})]]]]]]]]]];
   network_opt::visualizer.visualize_schematic(std::cout, problem_12_E, network);
   std::cout << std::endl;
   delete network;
 
-  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of phi, MINE) %%%%%%%%" << std::endl;
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of phi) %%%%%%%%" << std::endl;
   network = &N()[N(8)[N()[N()[N()[N(4)[N(0)][N()[N(1)][N({6,7})]]]]][N()[N()[N({5,10})]]]][N(11)[N(2)][N(9)]][N(3)]];
   network_opt::visualizer.visualize_schematic(std::cout, problem_12_PHI, network);
   std::cout << std::endl;
   delete network;
 
-  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of sqrt(2), MINE) %%%%%%%%" << std::endl;
+  std::cout << "%%%%%%%% FRIEDMAN (12-resistor of sqrt(2)) %%%%%%%%" << std::endl;
   network = &N()[N()[N()[N()[N()[N()[N(0)][N(9)[N(3)[N(11)[N({2,7})]]]]]]][N()[N()[N(10)[N(1)][N(5)]]]]][N(4)][N({6,8})]];
   network_opt::visualizer.visualize_schematic(std::cout, problem_12_SQRT2, network);
   std::cout << std::endl;
