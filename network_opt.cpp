@@ -48,6 +48,20 @@ Problem Problem::from_argv(char* argv[]) {
   return Problem(series, n, target, square);
 }
 
+Problem::Problem(const Ratio* series, unsigned int n, const Ratio& t, bool s) {
+  for (unsigned int i = 0; i < n; i++) elements.push_back(series[i]);
+  target = t;
+  square = s;
+}
+
+unsigned int Problem::size() const { return elements.size(); }
+
+const Ratio& Problem::operator[](unsigned int idx) const { return elements[idx]; }
+
+Ratio Problem::get_cost(const Ratio& total) const {
+  return (square ? total * total : total) - target;
+}
+
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
 Node* Node::clone() {
