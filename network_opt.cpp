@@ -13,6 +13,8 @@ limitations under the License.
 
 #include "network_opt.h"
 
+#define WRITEOP(s, op, mathmode) { if (op == '+' && mathmode) s += "$+$"; else s += op; }
+
 namespace network_opt {
 
 Ratio RATIO_E     = Ratio(271828182845905,100000000000000);
