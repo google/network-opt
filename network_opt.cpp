@@ -289,6 +289,17 @@ void Tabulator::tabulate(const Problem& problem, Node* network, std::vector<std:
   expandable->values = values;
 }
 
+Solver::Solver(const Params& params) : bounder(NULL), tabulator(NULL), best_network(NULL) {
+  if (params.b) bounder = new Bounder();
+  if (params.m) tabulator = new Tabulator(params.m);
+}
+
+Solver::~Solver() {
+  clear();
+  if (tabulator) delete tabulator;
+  if (bounder) delete bounder;
+}
+
 Node* Solver::solve(const Problem& problem) {
   clear();
   Node* network = &N();
