@@ -53,17 +53,10 @@ struct Problem {
 
   static Problem from_argv(char* argv[]);
 
-  Problem(const Ratio* series, unsigned int n, const Ratio& t, bool s) {
-    for (unsigned int i = 0; i < n; i++) elements.push_back(series[i]);
-    target = t;
-    square = s;
-  }
-
-  unsigned int size() const { return elements.size(); }
-  const Ratio& operator[](unsigned int idx) const { return elements[idx]; }
-  Ratio get_cost(const Ratio& total) const {
-    return (square ? total * total : total) - target;
-  }
+  Problem(const Ratio* series, unsigned int n, const Ratio& t, bool s);
+  unsigned int size() const;
+  const Ratio& operator[](unsigned int idx) const;
+  Ratio get_cost(const Ratio& total) const;
 };
 
 struct Node {
