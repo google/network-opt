@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "network_local.h"
+#include "network_opt_local.h"
 #include "stdlib.h"
 
 int main(int argc, char *argv[]) {
