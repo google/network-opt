@@ -62,6 +62,18 @@ Ratio Problem::get_cost(const Ratio& total) const {
   return (square ? total * total : total) - target;
 }
 
+Node& Node::create() { return *(new Node()); }
+
+Node& Node::create(Value v) { Node* node = new Node(); node->values.push_back(v); return *node; }
+
+Node& Node::create(const Values& vs) { Node* node = new Node(); node->values = vs; return *node; }
+
+Node& Node::create_test(Value v) { Node* node = new Node(); node->values.push_back(v - 1); return *node; }
+
+Node& Node::create_test(const Values& vs) { Node* node = new Node(); for (auto v : vs) node->values.push_back(v - 1); return *node; }
+
+Node::~Node() { for (auto child : children) if (!child->ratio) delete child; }
+
 Node& Node::operator[](Node& node) { children.push_back(&node); return *this; }
 
 Node* Node::clone() {
