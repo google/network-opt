@@ -61,16 +61,16 @@ struct Problem {
 
 struct Node {
   Values values; Values hidden; std::list<Node*> children; Ratio ratio;
-  static Node& create() { return *(new Node()); }
-  static Node& create(Value v) { Node* node = new Node(); node->values.push_back(v); return *node; }
-  static Node& create(const Values& vs) { Node* node = new Node(); node->values = vs; return *node; }
+  static Node& create();
+  static Node& create(Value v);
+  static Node& create(const Values& vs);
 
   // The following two take care of the "off-by-one" issue in test networks
   // (where we prefer to use literal node values over indices)
-  static Node& create_test(Value v) { Node* node = new Node(); node->values.push_back(v - 1); return *node; }
-  static Node& create_test(const Values& vs) { Node* node = new Node(); for (auto v : vs) node->values.push_back(v - 1); return *node; }
+  static Node& create_test(Value v);
+  static Node& create_test(const Values& vs);
 
-  ~Node() { for (auto child : children) if (!child->ratio) delete child; }
+  ~Node();
   Node& operator[](Node& node);
   Node* clone();
   void leafify();
