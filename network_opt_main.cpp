@@ -22,11 +22,11 @@ int main(int argc, char *argv[]) {
   unsigned int b = atoi(argv[2]), t = atoi(argv[3]);
   network_opt::Problem problem = network_opt::Problem::from_argv(argv);
   network_opt::Params params(b, t);
-  if (solver == "opt") {
+  if (solver == "OPT") {
     network_opt::Solver solver(params);
     network_opt::Node* network = solver.solve(problem);
     network_opt::print_summary(std::cout, problem, network, "");
-  } else if (solver == "local") {
+  } else if (solver == "LOCAL") {
     srand(2022);
     network_opt::LocalSolver solver(params);
     network_opt::Node* network = solver.solve(problem);
