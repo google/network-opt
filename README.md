@@ -16,12 +16,12 @@ Example usage of the tool:
 
 <pre>
 g++ -Wall network_opt.cpp network_opt_local.cpp network_opt_main.cpp -o network_opt -O3
-time ./network_opt opt 1 4 8 E12 SQRT
+time ./network_opt OPT 1 4 8 E12 SQRT
 </pre>
 
 Example output from the tool:
 <pre>
- Command: ./network_opt opt 1 4 8 E12 SQRT
+ Command: ./network_opt OPT 1 4 8 E12 SQRT
 Solution: (1|2.2)+((1.2+(1.5+1.8+(2.7|3.9)))|3.3)
  Network: N()[N({0,4})][N(6)[N()[N(1)][N()[N()[N(2)][N(3)][N({5,7})]]]]]
   Target: 2.82842712474619
