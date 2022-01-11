@@ -28,7 +28,6 @@ limitations under the License.
 
 #define N network_opt::Node::create
 #define NT network_opt::Node::create_test
-#define WRITEOP(s, op, mathmode) { if (op == '+' && mathmode) s += "$+$"; else s += op; }
 
 using boost::multiprecision::cpp_int;
 using Mask = unsigned int;
