@@ -127,16 +127,8 @@ struct Params {
 };
 
 struct Solver {
-  Solver(const Params& params) : bounder(NULL), tabulator(NULL), best_network(NULL) {
-    if (params.b) bounder = new Bounder();
-    if (params.m) tabulator = new Tabulator(params.m);
-  }
-  ~Solver() {
-    clear();
-    if (tabulator) delete tabulator;
-    if (bounder) delete bounder;
-  }
-
+  Solver(const Params& params);
+  ~Solver();
   Node* solve(const Problem& problem);
 
  private: Bounder* bounder; Tabulator* tabulator; Node* best_network;
