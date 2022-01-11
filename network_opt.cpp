@@ -347,8 +347,8 @@ void print_summary(std::ostream& os, const Problem& problem, Node* network, cons
   double cost = boost::rational_cast<double>(problem.get_cost(total));
   double target = boost::rational_cast<double>(problem.target);
   if (problem.square) {
-    cost = std::sqrt(cost);
     target = std::sqrt(target);
+    cost = std::sqrt(boost::rational_cast<double>(total)) - target;
   }
   os << prefix << "Solution: " << network->to_string(problem) << std::endl;
   os << prefix << " Network: " << network->to_network() << std::endl;
