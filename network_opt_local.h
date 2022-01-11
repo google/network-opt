@@ -11,6 +11,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+#ifndef _NETWORK_OPT_LOCAL_H_
+#define _NETWORK_OPT_LOCAL_H_
+
 #include "network_opt.h"
 
 namespace network_opt {
@@ -32,3 +35,5 @@ struct LocalSolver {
 };
     
 }
+
+#endif
