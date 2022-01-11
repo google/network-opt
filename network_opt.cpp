@@ -34,8 +34,8 @@ Ratio ONE_SERIES[] = {Ratio(1), Ratio(1), Ratio(1), Ratio(1),
                       Ratio(1), Ratio(1), Ratio(1), Ratio(1)};
 
 Problem Problem::from_argv(char* argv[]) {
-  unsigned int n = atoi(argv[3]);
-  std::string s = argv[4], g = argv[5];
+  unsigned int n = atoi(argv[4]);
+  std::string s = argv[5], g = argv[6];
   Ratio* series = E12_SERIES;
   Ratio target = Ratio(n);
   bool square = true;
