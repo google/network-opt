@@ -1,17 +1,6 @@
 # network-opt
 Source code for our AAAI 2022 paper, "***Search Strategies for Topological Network Optimization***."
 
-If you decide to use this software in your research, please cite the corresponding paper:
-
-<pre>
-@inproceedings{Moffitt2022,
-  title     = {Search strategies for topological network optimization},
-  author    = {Michael D. Moffitt},
-  booktitle = {Proceedings of the 36\textsuperscript{th} AAAI Conference on Artificial Intelligence},
-  year      = {2022}
-}
-</pre>
-
 Example usage of the tool:
 
 <pre>
@@ -31,6 +20,17 @@ Solution: (1|2.2)+((1.2+(1.5+1.8+(2.7|3.9)))|3.3)
 real    0m1.727s
 user    0m1.719s
 sys     0m0.018s
+</pre>
+
+If you decide to use this software in your research, please cite the corresponding paper:
+
+<pre>
+@inproceedings{Moffitt2022,
+  title     = {Search strategies for topological network optimization},
+  author    = {Michael D. Moffitt},
+  booktitle = {Proceedings of the 36\textsuperscript{th} AAAI Conference on Artificial Intelligence},
+  year      = {2022}
+}
 </pre>
 
 This is not an officially supported Google product.
