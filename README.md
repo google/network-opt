@@ -4,7 +4,7 @@ Source code for our AAAI 2022 paper, "***Search Strategies for Topological Netwo
 Example usage of the tool:
 
 <pre>
-g++ -Wall network_opt.cpp network_opt_local.cpp network_opt_main.cpp -o network_opt -O3
+g++ -Wall src/network_opt.cpp src/network_opt_local.cpp src/network_opt_main.cpp -o network_opt -O3
 time ./network_opt OPT 1 4 8 E12 SQRT
 </pre>
 
