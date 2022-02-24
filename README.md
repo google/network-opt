@@ -1,5 +1,5 @@
 # network-opt
-Source code for our [AAAI 2022](https://aaai.org/Conferences/AAAI-22/) paper, "[***Search Strategies for Topological Network Optimization***](https://research.google/pubs/pub51051/)."
+Source code for our [AAAI 2022](https://aaai.org/Conferences/AAAI-22/) paper, "[***Search Strategies for Topological Network Optimization***](https://www.aaai.org/AAAI22Papers/AAAI-21.MoffittM.pdf)."
 
 Example usage of the tool:
 
