@@ -16,7 +16,7 @@ $(TARGET): $(OBJS) $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) $(OBJS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)	
-	$(CXX) -c $< -o $@
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR):
 	mkdir -p $@
