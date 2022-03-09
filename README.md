@@ -4,10 +4,7 @@ Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21
 Example usage of the tool:
 
 <pre>
-g++ src/network_opt.cpp \
-    src/network_opt_local.cpp \
-    src/network_opt_main.cpp \
-    -Wall -O3 -o network_opt
+make
 time ./network_opt OPT 1 4 8 E12 SQRT
 </pre>
 
