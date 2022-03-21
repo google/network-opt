@@ -25,6 +25,12 @@ Ratio RATIO_SQRT2 = Ratio(141421356237309,100000000000000);
 Ratio INT_SERIES[] = {Ratio( 1), Ratio( 2), Ratio( 3), Ratio( 4),
                       Ratio( 5), Ratio( 6), Ratio( 7), Ratio( 8),
                       Ratio( 9), Ratio(10), Ratio(11), Ratio(12)};
+Ratio ODD_SERIES[] = {Ratio( 1), Ratio( 3), Ratio( 5), Ratio( 7),
+                      Ratio( 9), Ratio(11), Ratio(13), Ratio(15),
+                      Ratio(17), Ratio(19), Ratio(21), Ratio(23)};
+Ratio EVEN_SERIES[] = {Ratio(2), Ratio( 4), Ratio( 6), Ratio( 8),
+                      Ratio(10), Ratio(12), Ratio(14), Ratio(16),
+                      Ratio(18), Ratio(20), Ratio(22), Ratio(24)};
 Ratio E12_SERIES[] = {Ratio(10,10), Ratio(12,10), Ratio(15,10), Ratio(18,10),
                       Ratio(22,10), Ratio(27,10), Ratio(33,10), Ratio(39,10),
                       Ratio(47,10), Ratio(56,10), Ratio(68,10), Ratio(82,10)};
@@ -40,6 +46,8 @@ Problem Problem::from_argv(char* argv[]) {
   Ratio target = Ratio(n);
   bool square = true;
   if (s ==   "INT") series = INT_SERIES;
+  if (s ==   "ODD") series = ODD_SERIES;
+  if (s ==  "EVEN") series = EVEN_SERIES;
   if (s ==   "ONE") series = ONE_SERIES;
   if (g ==     "E") { square = false; target = RATIO_E; }
   if (g ==    "PI") { square = false; target = RATIO_PI; }
