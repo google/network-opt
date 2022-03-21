@@ -16,17 +16,17 @@ TEST_OBJS=$(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(TEST_SRCS))
 all: $(TARGET)
 
 $(TARGET): $(OBJS) $(BUILD_DIR)
-        $(CXX) $(CXX_FLAGS) $(OBJS) -o $@
+	$(CXX) $(CXX_FLAGS) $(OBJS) -o $@
 
 $(TEST_TARGET): $(TEST_OBJS) $(BUILD_DIR)
-        $(CXX) $(CXX_FLAGS) $(TEST_OBJS) -o $@
+	$(CXX) $(CXX_FLAGS) $(TEST_OBJS) -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR) 
-        $(CXX) $(CXX_FLAGS) -c $< -o $@
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR):
         mkdir -p $@
 
 clean:
-        rm -r $(OBJS)
-        rm $(TARGET)
+	rm -r $(OBJS)
+	rm $(TARGET)
