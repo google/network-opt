@@ -25,7 +25,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)
 	$(CXX) $(CXX_FLAGS) -c $< -o $@
 
 $(BUILD_DIR):
-        mkdir -p $@
+	mkdir -p $@
 
 clean:
 	rm -r $(OBJS)
