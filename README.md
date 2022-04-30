@@ -1,7 +1,6 @@
-# network-opt
-Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://www.aaai.org/AAAI22Papers/AAAI-21.MoffittM.pdf)."
-
 ![network-opt logo](network-opt.png?raw=true "network-opt logo")
+
+Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://www.aaai.org/AAAI22Papers/AAAI-21.MoffittM.pdf)."
 
 Example usage of the tool:
 
