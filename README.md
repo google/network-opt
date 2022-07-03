@@ -28,14 +28,16 @@ sys     0m0.018s
 If you decide to use this software in your research, please cite the corresponding paper:
 
 <pre>
-@inproceedings{Moffitt2022,
-  title     = {Search strategies for topological network optimization},
-  author    = {Michael D. Moffitt},
-  booktitle = {Proceedings of the 36\textsuperscript{th} AAAI Conference on Artificial Intelligence},
-  year      = {2022},
-  volume    = {36},
-  number    = {9},
-  pages     = {10299-10308}
+@article{Moffitt_2022,
+  title = {Search Strategies for Topological Network Optimization},
+  volume = {36},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/21271},
+  number = {9},
+  journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  author = {Moffitt, Michael D.},
+  year = {2022},
+  month = {Jun.},
+  pages = {10299-10308}
 }
 </pre>
 
