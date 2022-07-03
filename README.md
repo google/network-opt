@@ -2,7 +2,7 @@
 <img src="img/network-opt.png">
 </p>
 
-Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://www.aaai.org/AAAI22Papers/AAAI-21.MoffittM.pdf)."
+Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://ojs.aaai.org/index.php/AAAI/article/view/21271)."
 
 Example usage of the tool:
 
@@ -32,7 +32,8 @@ If you decide to use this software in your research, please cite the correspondi
   title     = {Search strategies for topological network optimization},
   author    = {Michael D. Moffitt},
   booktitle = {Proceedings of the 36\textsuperscript{th} AAAI Conference on Artificial Intelligence},
-  year      = {2022}
+  year      = {2022},
+  pages     = {10299-10308}
 }
 </pre>
 
