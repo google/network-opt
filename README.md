@@ -33,6 +33,8 @@ If you decide to use this software in your research, please cite the correspondi
   author    = {Michael D. Moffitt},
   booktitle = {Proceedings of the 36\textsuperscript{th} AAAI Conference on Artificial Intelligence},
   year      = {2022},
+  volume    = {36},
+  number    = {9},
   pages     = {10299-10308}
 }
 </pre>
