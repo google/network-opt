@@ -4,14 +4,15 @@
 
 Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://ojs.aaai.org/index.php/AAAI/article/view/21271)."
 
-Example usage of the tool:
+## Example usage
 
 <pre>
 make
 time ./network_opt OPT 1 4 8 E12 SQRT
 </pre>
 
-Example output from the tool:
+## Example output
+
 <pre>
  Command: ./network_opt OPT 1 4 8 E12 SQRT
 Solution: (1|2.2)+((1.2+(1.5+1.8+(2.7|3.9)))|3.3)
@@ -25,7 +26,7 @@ user    0m1.719s
 sys     0m0.018s
 </pre>
 
-If you decide to use this software in your research, please cite the corresponding paper:
+## How to cite?
 
 <pre>
 @article{Moffitt_2022,
@@ -40,5 +41,7 @@ If you decide to use this software in your research, please cite the correspondi
   pages = {10299-10308}
 }
 </pre>
+
+## Disclaimer
 
 This is not an officially supported Google product.
