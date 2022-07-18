@@ -2,7 +2,7 @@
 <img src="img/network-opt.png">
 </p>
 
-Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://ojs.aaai.org/index.php/AAAI/article/view/21271)."
+Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://doi.org/10.1609/aaai.v36i9.21271)."
 
 ## Example usage
 
