@@ -32,7 +32,7 @@ sys     0m0.018s
 @article{Moffitt_2022,
   title = {Search Strategies for Topological Network Optimization},
   volume = {36},
-  url = {https://ojs.aaai.org/index.php/AAAI/article/view/21271},
+  url = {https://doi.org/10.1609/aaai.v36i9.21271},
   number = {9},
   journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
   author = {Moffitt, Michael D.},
