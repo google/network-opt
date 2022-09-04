@@ -112,7 +112,7 @@ std::string Node::to_string(const Problem& problem, bool mathmode, bool top, cha
   std::string s = "";
   if (!top && values.size() + children.size() > 1) s += "(";
   for (auto& child : children) {
-    if (child != children.begin()) WRITEOP(s, op1, mathmode);
+    if (child != *children.begin()) WRITEOP(s, op1, mathmode);
     bool subtop = top && values.size() == 0 && children.size() == 1;
     s += child->ratio ? child->to_string(problem, mathmode, subtop)
                       : child->to_string(problem, mathmode, subtop, op2, op1);
