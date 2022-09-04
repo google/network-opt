@@ -111,14 +111,14 @@ void Node::leafify() {
 std::string Node::to_string(const Problem& problem, bool mathmode, bool top, char op1, char op2) const {
   std::string s = "";
   if (!top && values.size() + children.size() > 1) s += "(";
-  for (auto child = children.begin(); child != children.end(); ++child) {
+  for (auto child : children) {
     if (child != children.begin()) WRITEOP(s, op1, mathmode);
     bool subtop = top && values.size() == 0 && children.size() == 1;
     s += (*child)->ratio ? (*child)->to_string(problem, mathmode, subtop)
                          : (*child)->to_string(problem, mathmode, subtop, op2, op1);
   }
   if (!values.empty() && !children.empty()) WRITEOP(s, op1, mathmode);
-  for (auto value = values.begin(); value != values.end(); ++value) {
+  for (auto value : values) {
     if (value != values.begin()) WRITEOP(s, op1, mathmode);
     auto v = boost::rational_cast<long long>(problem[*value] * 10);
     s += std::to_string(v / 10);
@@ -131,13 +131,13 @@ std::string Node::to_string(const Problem& problem, bool mathmode, bool top, cha
 std::string Node::to_network(char op1, char op2) const {
   std::string s = "N(";
   if (values.size() > 1) s += "{";
-  for (auto value = values.begin(); value != values.end(); ++value) {
+  for (auto value : values) {
     if (value != values.begin()) s += ",";
     s += std::to_string(*value);
   }
   if (values.size() > 1) s += "}";
   s += ")";
-  for (auto child = children.begin(); child != children.end(); ++child) {
+  for (auto child : children) {
     s += "[";
     if ((*child)->ratio && op1 == '+') s += "N()[";
     s += (*child)->ratio ? (*child)->to_network() : (*child)->to_network(op2, op1);
