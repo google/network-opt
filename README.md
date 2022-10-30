@@ -35,7 +35,7 @@ sys     0m0.018s
   url = {https://doi.org/10.1609/aaai.v36i9.21271},
   DOI = {10.1609/aaai.v36i9.21271},
   number = {9},
-  journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  journal = {Proceedings of the 36th AAAI Conference on Artificial Intelligence},
   author = {Moffitt, Michael D.},
   year = {2022},
   month = {Jun.},
