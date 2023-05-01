@@ -29,7 +29,7 @@ sys     0m0.018s
 ## How to cite?
 
 <pre>
-@article{Moffitt_2022,
+@article{Moffitt2022,
   title = {Search Strategies for Topological Network Optimization},
   volume = {36},
   url = {https://doi.org/10.1609/aaai.v36i9.21271},
