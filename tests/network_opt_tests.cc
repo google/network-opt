@@ -24,19 +24,19 @@ TEST(NodeTest, AllTests) {
   Node* network = NULL;
 
   network = &N()[NT(1)][N()[NT(2)][NT(3)][NT(4)]][NT(5)];
-  assert(network->to_string(problem5) == "1+(2|3|4)+5");
-  assert(network->to_string(problem5, true) == "1$+$(2|3|4)$+$5");
-  assert(network->to_network() == "N()[N(0)][N()[N(1)][N(2)][N(3)]][N(4)]");
+  EXPECT_EQ(network->to_string(problem5), "1+(2|3|4)+5");
+  EXPECT_EQ(network->to_string(problem5, true), "1$+$(2|3|4)$+$5");
+  EXPECT_EQ(network->to_network(), "N()[N(0)][N()[N(1)][N(2)][N(3)]][N(4)]");
   delete network;
 
   network = &N()[N()[N()[NT(3)][NT(7)]][N()[NT(1)][NT(2)][NT(5)]][N()[NT(4)][NT(6)]]];
-  assert(network->to_string(problem7) == "(3+7)|(1+2+5)|(4+6)");
+  EXPECT_EQ(network->to_string(problem7), "(3+7)|(1+2+5)|(4+6)");
   delete network;
 
   network = &N()[NT({1,3})][NT(7)[NT(6)[NT({2,5})]][NT(4)]];
-  assert(network->to_network() == "N()[N({0,2})][N(6)[N(5)[N({1,4})]][N(3)]]");
+  EXPECT_EQ(network->to_network(), "N()[N({0,2})][N(6)[N(5)[N({1,4})]][N(3)]]");
   network->leafify();
-  assert(network->to_network() == "N()[N()[N(0)][N(2)]][N()[N()[N()[N(1)][N(4)]][N(5)]][N(3)][N(6)]]");
+  EXPECT_EQ(network->to_network(), "N()[N()[N(0)][N(2)]][N()[N()[N()[N(1)][N(4)]][N(5)]][N(3)][N(6)]]");
   delete network;
 }
 
@@ -46,20 +46,20 @@ TEST(NetworkEvaluatorTest, AllTests) {
   Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
-  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(220, 1));
+  EXPECT_EQ(network_evaluator.evaluate_cost(problem5, network), Ratio(220, 1));
   delete network;
 
   network = &N()[N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)]];
-  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(90245, 18769));
+  EXPECT_EQ(network_evaluator.evaluate_cost(problem5, network), Ratio(90245, 18769));
   delete network;
 
   network = &N()[NT(1)][N()[NT(2)][N()[NT(3)][N()[NT(4)][NT(5)]]]];
-  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(4156, 4225));
+  EXPECT_EQ(network_evaluator.evaluate_cost(problem5, network), Ratio(4156, 4225));
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]][NT(8)];
-  assert(network_evaluator.evaluate_cost(problem8, network,  1) == Ratio(217, 1));
-  assert(network_evaluator.evaluate_cost(problem8, network, -1) == Ratio(4211777, 49729));
+  EXPECT_EQ(network_evaluator.evaluate_cost(problem8, network,  1), Ratio(217, 1));
+  EXPECT_EQ(network_evaluator.evaluate_cost(problem8, network, -1), Ratio(4211777, 49729));
   delete network;
 }
 
@@ -67,38 +67,38 @@ TEST(ExpanderTest, AllTests) {
   Node* network = NULL;
 
   network = &NT({1,2,3});
-  assert(Expander(network).expandable() == network);
+  EXPECT_EQ(Expander(network).expandable(), network);
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})][NT({5,6})];
-  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  EXPECT_EQ(Expander(network).expandable()->values, Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT({2,3})][NT({5,6,7})];
-  assert(Expander(network).expandable()->values == Values({4,5,6})); // means {5,6,7}
+  EXPECT_EQ(Expander(network).expandable()->values, Values({4,5,6})); // means {5,6,7}
   delete network;
 
   network = &N()[NT(1)][NT(5)[NT({2,3,4})]][NT({6,7})];
-  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  EXPECT_EQ(Expander(network).expandable()->values, Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT(2)][NT(3)];
-  assert(Expander(network).expandable() == NULL);
+  EXPECT_EQ(Expander(network).expandable(), nullptr);
   delete network;
 
   // Verify that we can see more than one expandable
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]];
   Expander expander(network);
-  assert(expander.expandable()->values == Values({1,2,3})); // means {2,3,4}
-  assert(expander.expandable()->values == Values({4,5,6})); // means {5,6,7}
-  assert(expander.expandable() == NULL);
+  EXPECT_EQ(expander.expandable()->values, Values({1,2,3})); // means {2,3,4}
+  EXPECT_EQ(expander.expandable()->values, Values({4,5,6})); // means {5,6,7}
+  EXPECT_EQ(expander.expandable(), nullptr);
   delete network;
 
   // Verify that we can modify the contents of the given list
   network = &N()[NT({1,2,3})][NT(4)][NT(5)];
   Node* expandable = Expander(network).expandable();
   expandable->values.push_back(5);
-  assert(network->children.front()->values == Values({0,1,2,5})); // means {1,2,3,6}
+  EXPECT_EQ(network->children.front()->values, Values({0,1,2,5})); // means {1,2,3,6}
   delete network;
 }
 
@@ -111,24 +111,24 @@ TEST(TabulatorTest, AllTests) {
   network = &N()[N()[NT(1)][NT(3)]][N()[NT({2,5,6})][NT(4)][NT(7)]];
   Expander expander_a(network);
   Node* expandable_a = expander_a.expandable();
-  assert(expandable_a->values == Values({1,4,5})); // means {2,5,6}
+  EXPECT_EQ(expandable_a->values, Values({1,4,5})); // means {2,5,6}
   Values values_a = expandable_a->values; expandable_a->values.clear();
   Node* replacement_a = tabulator.binary_search(problem7, network, expandable_a, values_a);
-  assert(replacement_a->ratio == Ratio(52, 7));
+  EXPECT_EQ(replacement_a->ratio, Ratio(52, 7));
   delete network;
 
   network = &N()[NT({1,3,4})][NT(7)][NT({2,5,6})];
   Expander expander_b(network);
   Node* expandable_b0 = expander_b.expandable();
   Node* expandable_b1 = expander_b.expandable();
-  assert(expandable_b0->values == Values({1,4,5})); // means {2,5,6}
-  assert(expandable_b1->values == Values({0,2,3})); // means {1,3,4}
+  EXPECT_EQ(expandable_b0->values, Values({1,4,5})); // means {2,5,6}
+  EXPECT_EQ(expandable_b1->values, Values({0,2,3})); // means {1,3,4}
   Values values_b0 = expandable_b0->values; expandable_b0->values.clear();
   Values values_b1 = expandable_b1->values; expandable_b1->values.clear();
   std::pair<Node*,Node*> replacement_b = tabulator.linear_search(
       problem7, network, expandable_b0, expandable_b1, values_b0, values_b1);
-  assert(replacement_b.first->ratio  == Ratio(15, 13));
-  assert(replacement_b.second->ratio == Ratio(12, 19));
+  EXPECT_EQ(replacement_b.first->ratio, Ratio(15, 13));
+  EXPECT_EQ(replacement_b.second->ratio, Ratio(12, 19));
   delete network;
 }
 
