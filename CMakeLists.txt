@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(external/abseil-cpp)
 add_subdirectory(external/googletest)
 add_executable(network_opt
-  src/main.cc
+  src/network_opt_main.cc
   src/network_opt.cc
 )
 target_link_libraries(network_opt
