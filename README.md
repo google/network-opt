@@ -14,7 +14,6 @@ $ git clone --recursive git@github.com:google/network-opt.git && \
 ## Example usage
 
 <pre>
-make
 time ./network_opt OPT 1 4 8 E12 SQRT
 </pre>
 
