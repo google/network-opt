@@ -4,6 +4,13 @@
 
 Source code for our [AAAI 2022](https://aaai-2022.virtualchair.net/poster_aaai21) paper, "[***Search Strategies for Topological Network Optimization***](https://doi.org/10.1609/aaai.v36i9.21271)."
 
+## Setup
+
+<pre>
+$ git clone --recursive git@github.com:google/network-opt.git && \
+      cd network-opt && cmake -DCMAKE_BUILD_TYPE=Release && make
+</pre>
+
 ## Example usage
 
 <pre>
