@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(external/abseil-cpp)
 add_subdirectory(external/googletest)
 add_executable(network_opt
+  src/network_opt_local.cc
   src/network_opt_main.cc
   src/network_opt.cc
 )
@@ -18,9 +19,9 @@ enable_testing()
 add_executable(network_opt_tests
   tests/network_opt_tests.cc
   src/network_opt_utils.cc
+  src/network_opt.cc
 )
 target_link_libraries(network_opt_tests
-  GTest::gmock_main
   GTest::gtest_main
   absl::flags
   absl::statusor

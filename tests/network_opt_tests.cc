@@ -11,10 +11,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "../src/network_opt_utils.h"
-
-#include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
+#include "../src/network_opt_utils.h"
 
 namespace network_opt {
 namespace {
@@ -134,7 +133,7 @@ TEST(TabulatorTest, AllTests) {
 }
 
 void check_network(Node* network, Ratio ratio) {
-  assert(network->ratio == ratio);
+  EXPECT_EQ(network->ratio, ratio);
 }
 
 void test_solver(bool b = false, unsigned int t = true) {
