@@ -11,12 +11,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-#include "network_opt_utils.h"
+#include "../src/network_opt_utils.h"
 
-void test_node() {
-  network_opt::Problem problem5(network_opt::INT_SERIES, 5, Ratio(5), true);
-  network_opt::Problem problem7(network_opt::INT_SERIES, 7, Ratio(7), true);
-  network_opt::Node* network = NULL;
+#include "gmock/gmock.h"
+#include "gtest/gtest.h"
+
+namespace network_opt {
+namespace {
+
+TEST(NodeTest, AllTests) {
+  Problem problem5(INT_SERIES, 5, Ratio(5), true);
+  Problem problem7(INT_SERIES, 7, Ratio(7), true);
+  Node* network = NULL;
 
   network = &N()[NT(1)][N()[NT(2)][NT(3)][NT(4)]][NT(5)];
   assert(network->to_string(problem5) == "1+(2|3|4)+5");
@@ -35,121 +41,124 @@ void test_node() {
   delete network;
 }
 
-void test_network_evaluator() {
-  network_opt::Problem problem5(network_opt::INT_SERIES, 5, Ratio(5), true);
-  network_opt::Problem problem8(network_opt::INT_SERIES, 8, Ratio(8), true);
-  network_opt::Node* network = NULL;
+TEST(NetworkEvaluatorTest, AllTests) {
+  Problem problem5(INT_SERIES, 5, Ratio(5), true);
+  Problem problem8(INT_SERIES, 8, Ratio(8), true);
+  Node* network = NULL;
 
   network = &N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)];
-  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(220, 1));
+  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(220, 1));
   delete network;
 
   network = &N()[N()[NT(1)][NT(2)][NT(3)][NT(4)][NT(5)]];
-  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(90245, 18769));
+  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(90245, 18769));
   delete network;
 
   network = &N()[NT(1)][N()[NT(2)][N()[NT(3)][N()[NT(4)][NT(5)]]]];
-  assert(network_opt::network_evaluator.evaluate_cost(problem5, network) == Ratio(4156, 4225));
+  assert(network_evaluator.evaluate_cost(problem5, network) == Ratio(4156, 4225));
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]][NT(8)];
-  assert(network_opt::network_evaluator.evaluate_cost(problem8, network,  1) == Ratio(217, 1));
-  assert(network_opt::network_evaluator.evaluate_cost(problem8, network, -1) == Ratio(4211777, 49729));
+  assert(network_evaluator.evaluate_cost(problem8, network,  1) == Ratio(217, 1));
+  assert(network_evaluator.evaluate_cost(problem8, network, -1) == Ratio(4211777, 49729));
   delete network;
 }
 
-void test_expander() {
-  network_opt::Node* network = NULL;
+TEST(ExpanderTest, AllTests) {
+  Node* network = NULL;
 
   network = &NT({1,2,3});
-  assert(network_opt::Expander(network).expandable() == network);
+  assert(Expander(network).expandable() == network);
   delete network;
 
   network = &N()[NT(1)][NT({2,3,4})][NT({5,6})];
-  assert(network_opt::Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT({2,3})][NT({5,6,7})];
-  assert(network_opt::Expander(network).expandable()->values == Values({4,5,6})); // means {5,6,7}
+  assert(Expander(network).expandable()->values == Values({4,5,6})); // means {5,6,7}
   delete network;
 
   network = &N()[NT(1)][NT(5)[NT({2,3,4})]][NT({6,7})];
-  assert(network_opt::Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
+  assert(Expander(network).expandable()->values == Values({1,2,3})); // means {2,3,4}
   delete network;
 
   network = &N()[NT(1)][NT(2)][NT(3)];
-  assert(network_opt::Expander(network).expandable() == NULL);
+  assert(Expander(network).expandable() == NULL);
   delete network;
 
   // Verify that we can see more than one expandable
   network = &N()[NT(1)][NT({2,3,4})[NT({5,6,7})]];
-  network_opt::Expander expander(network);
+  Expander expander(network);
   assert(expander.expandable()->values == Values({1,2,3})); // means {2,3,4}
   assert(expander.expandable()->values == Values({4,5,6})); // means {5,6,7}
   assert(expander.expandable() == NULL);
   delete network;
-  
+
   // Verify that we can modify the contents of the given list
   network = &N()[NT({1,2,3})][NT(4)][NT(5)];
-  network_opt::Node* expandable = network_opt::Expander(network).expandable();
+  Node* expandable = Expander(network).expandable();
   expandable->values.push_back(5);
   assert(network->children.front()->values == Values({0,1,2,5})); // means {1,2,3,6}
   delete network;
 }
 
-void test_tabulator() {
-  network_opt::Problem problem7(network_opt::INT_SERIES, 7, Ratio(7), true);
-  network_opt::Tabulator tabulator(3);
+TEST(TabulatorTest, AllTests) {
+  Problem problem7(INT_SERIES, 7, Ratio(7), true);
+  Tabulator tabulator(3);
   tabulator.tabulate(problem7);
-  network_opt::Node* network = NULL;
+  Node* network = NULL;
 
   network = &N()[N()[NT(1)][NT(3)]][N()[NT({2,5,6})][NT(4)][NT(7)]];
-  network_opt::Expander expander_a(network);
-  network_opt::Node* expandable_a = expander_a.expandable();
+  Expander expander_a(network);
+  Node* expandable_a = expander_a.expandable();
   assert(expandable_a->values == Values({1,4,5})); // means {2,5,6}
   Values values_a = expandable_a->values; expandable_a->values.clear();
-  network_opt::Node* replacement_a = tabulator.binary_search(problem7, network, expandable_a, values_a);
+  Node* replacement_a = tabulator.binary_search(problem7, network, expandable_a, values_a);
   assert(replacement_a->ratio == Ratio(52, 7));
   delete network;
 
   network = &N()[NT({1,3,4})][NT(7)][NT({2,5,6})];
-  network_opt::Expander expander_b(network);
-  network_opt::Node* expandable_b0 = expander_b.expandable();
-  network_opt::Node* expandable_b1 = expander_b.expandable();
+  Expander expander_b(network);
+  Node* expandable_b0 = expander_b.expandable();
+  Node* expandable_b1 = expander_b.expandable();
   assert(expandable_b0->values == Values({1,4,5})); // means {2,5,6}
   assert(expandable_b1->values == Values({0,2,3})); // means {1,3,4}
   Values values_b0 = expandable_b0->values; expandable_b0->values.clear();
   Values values_b1 = expandable_b1->values; expandable_b1->values.clear();
-  std::pair<network_opt::Node*,network_opt::Node*> replacement_b = tabulator.linear_search(
+  std::pair<Node*,Node*> replacement_b = tabulator.linear_search(
       problem7, network, expandable_b0, expandable_b1, values_b0, values_b1);
   assert(replacement_b.first->ratio  == Ratio(15, 13));
   assert(replacement_b.second->ratio == Ratio(12, 19));
   delete network;
 }
 
-void check_network(network_opt::Node* network, Ratio ratio) {
+void check_network(Node* network, Ratio ratio) {
   assert(network->ratio == ratio);
 }
 
 void test_solver(bool b = false, unsigned int t = true) {
-  network_opt::Params params(b, t);
-  network_opt::Solver solver(params);
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 2, Ratio(2), true)), Ratio(14, 9));
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 3, Ratio(3), true)), Ratio(3, 4));
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 4, Ratio(4), true)), Ratio(0, 1));
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 5, Ratio(5), true)), Ratio(5, 81));
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 6, Ratio(6), true)), Ratio(278, 178929));
-  check_network(solver.solve(network_opt::Problem(network_opt::INT_SERIES, 7, Ratio(7), true)), Ratio(1, 2304));
+  Params params(b, t);
+  Solver solver(params);
+  check_network(solver.solve(Problem(INT_SERIES, 2, Ratio(2), true)), Ratio(14, 9));
+  check_network(solver.solve(Problem(INT_SERIES, 3, Ratio(3), true)), Ratio(3, 4));
+  check_network(solver.solve(Problem(INT_SERIES, 4, Ratio(4), true)), Ratio(0, 1));
+  check_network(solver.solve(Problem(INT_SERIES, 5, Ratio(5), true)), Ratio(5, 81));
+  check_network(solver.solve(Problem(INT_SERIES, 6, Ratio(6), true)), Ratio(278, 178929));
+  check_network(solver.solve(Problem(INT_SERIES, 7, Ratio(7), true)), Ratio(1, 2304));
 }
 
-int main() {
-  test_node();
-  test_network_evaluator();
-  test_expander();
-  test_tabulator();
+TEST(SolverTest, DefaultParams) {
   test_solver();
-  test_solver(true);
-  test_solver(true, 3);
-
-  std::cout << "*** TESTS PASS ***" << std::endl;
 }
+
+TEST(SolverTest, TrueParams) {
+  test_solver(true);
+}
+
+TEST(SolverTest, True3Params) {
+  test_solver(true, 3);
+}
+
+}  // namespace
+}  // namespace network_opt
